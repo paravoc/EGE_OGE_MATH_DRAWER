@@ -154,9 +154,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 220px;
-      min-width: 220px;
-      height: 64px;
+      width: 184px;
+      min-width: 184px;
+      height: 52px;
       gap: 0;
       --orbit: 0;
       --mx: 0px;
@@ -167,14 +167,14 @@
       --i: 0;
       --spread-x: 0px;
       --spread-y: 0px;
-      width: 30px;
-      height: 30px;
+      width: 24px;
+      height: 24px;
       padding: 0;
-      min-height: 30px;
+      min-height: 24px;
       position: absolute;
       left: 50%;
       top: 50%;
-      margin: -15px 0 0 -15px;
+      margin: -12px 0 0 -12px;
       border-radius: 999px;
       border: 2px solid rgba(255,255,255,0.9);
       cursor: pointer;
@@ -203,7 +203,7 @@
     }
 
     .swatches:not(:hover):not(.is-active) .swatch {
-      transform: translate(calc(var(--i) * 12px), calc((var(--i) % 2) * 2px - 1px)) scale(1);
+      transform: translate(calc(var(--i) * 8px), calc((var(--i) % 2) * 2px - 1px)) scale(1);
     }
 
     input[type="color"] {
@@ -3011,6 +3011,9 @@
       function endDragObject() { state.isDraggingObject = false; }
 
       function createTextEditor(world, type) {
+        const existingEditor = boardWrap.querySelector('.floating-input');
+        if (existingEditor) existingEditor.focus();
+
         const editor = document.createElement('textarea');
         editor.className = 'floating-input';
         editor.placeholder = type === 'note' ? 'Введите заметку...' : 'Введите текст...';
@@ -3024,10 +3027,17 @@
         editor.dataset.fontSize = String(Math.max(18, state.brushSize * 6));
         editor.style.fontSize = editor.dataset.fontSize + 'px';
         boardWrap.appendChild(editor);
-        editor.focus();
+
+        let isDone = false;
+        const cleanup = () => {
+          document.removeEventListener('pointerdown', handleOutsidePointerDown, true);
+          editor.removeEventListener('blur', handleBlur);
+        };
 
         const finalize = () => {
-          if (!editor.isConnected) return;
+          if (isDone || !editor.isConnected) return;
+          isDone = true;
+          cleanup();
           const value = editor.value.trimEnd();
           const x = Number(editor.dataset.worldX);
           const y = Number(editor.dataset.worldY);
@@ -3041,9 +3051,32 @@
           render();
         };
 
+        const cancel = () => {
+          if (isDone || !editor.isConnected) return;
+          isDone = true;
+          cleanup();
+          editor.remove();
+          render();
+        };
+
+        const handleOutsidePointerDown = (event) => {
+          if (!editor.contains(event.target)) finalize();
+        };
+
+        const handleBlur = () => {
+          setTimeout(() => {
+            if (!editor.isConnected || isDone) return;
+            if (document.activeElement !== editor) finalize();
+          }, 0);
+        };
+
+        ['pointerdown', 'mousedown', 'click'].forEach(typeName => {
+          editor.addEventListener(typeName, event => event.stopPropagation());
+        });
+
         editor.addEventListener('keydown', e => {
-          if (e.key === 'Escape') { editor.remove(); render(); }
-          else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) finalize();
+          if (e.key === 'Escape') { e.preventDefault(); cancel(); }
+          else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); finalize(); }
           else if ((e.key === '+' || e.key === '=') && e.altKey) {
             e.preventDefault(); const next = (parseFloat(editor.dataset.fontSize) || 24) + 2; editor.dataset.fontSize = String(next); editor.style.fontSize = next + 'px';
           } else if (e.key === '-' && e.altKey) {
@@ -3051,7 +3084,13 @@
           }
         });
 
-        editor.addEventListener('blur', finalize, { once: true });
+        editor.addEventListener('blur', handleBlur);
+        requestAnimationFrame(() => {
+          if (!editor.isConnected) return;
+          editor.focus();
+          editor.setSelectionRange(editor.value.length, editor.value.length);
+          setTimeout(() => document.addEventListener('pointerdown', handleOutsidePointerDown, true), 0);
+        });
       }
 
       function getAllObjectsBounds() {
