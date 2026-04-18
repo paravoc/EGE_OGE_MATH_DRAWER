@@ -874,6 +874,133 @@
     }
 
 
+    .subject-panel {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .subject-panel .check-label span {
+      font-weight: 600;
+    }
+
+    .info-panel-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .info-builder-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 14px;
+      overflow: auto;
+      min-height: 0;
+    }
+
+    .info-builder-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .info-builder-body label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .info-builder-body input,
+    .info-builder-body select,
+    .info-builder-body textarea {
+      width: 100%;
+      min-height: 40px;
+      padding: 9px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(15,23,42,0.10);
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+    }
+
+    .info-builder-body textarea {
+      min-height: 90px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .info-builder-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .info-result-card {
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 16px;
+      background: rgba(15,23,42,0.025);
+      padding: 12px;
+      overflow: auto;
+    }
+
+    .info-inline-result {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+      white-space: pre-wrap;
+    }
+
+    .truth-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    .truth-table th,
+    .truth-table td {
+      border: 1px solid rgba(15,23,42,0.08);
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    .truth-table th {
+      background: rgba(15,23,42,0.05);
+      font-weight: 700;
+    }
+
+    .truth-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      line-height: 1.45;
+    }
+
+
+    .formulas-panel,
+    .formulas-panel * {
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .formulas-panel button,
+    .formulas-panel .check-label,
+    .formulas-panel .check-label * {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .link-text {
+      color: #2563eb;
+      text-decoration: underline;
+    }
+
+
     @media (max-width: 1100px) {
       .topbar {
         height: auto;
@@ -923,6 +1050,7 @@
           <button id="eraserTool" class="danger" title="Ластик мазков (E)">⌫</button>
           <button id="objectEraserTool" class="danger" title="Ластик объектов (O)">🧹</button>
           <button id="textTool" title="Текст (Alt+T)">T</button>
+          <button id="linkTool" title="Ссылка (K)">🔗</button>
           <button id="noteTool" title="Заметка (N)">📝</button>
         </div>
 
@@ -977,7 +1105,23 @@
           </div>
         </div>
 
-        <div class="panel">
+        <div class="panel subject-panel">
+          <label class="check-label">
+            <input id="subjectMath" type="checkbox" checked />
+            <span>Математика</span>
+          </label>
+          <label class="check-label">
+            <input id="subjectInfo" type="checkbox" />
+            <span>Информатика</span>
+          </label>
+        </div>
+
+        <div class="panel info-panel-buttons" id="infoToolsPanel">
+          <button id="bitCalcBtn" title="Калькулятор бит, байт и единиц информации">💾 Единицы</button>
+          <button id="logicTableBtn" title="Таблица истинности">🔀 Логика</button>
+        </div>
+
+        <div class="panel" id="mathLabelsPanel">
           <label class="check-label">
             <input id="autoLabelVertices" type="checkbox" />
             <span>Подписи вершин</span>
@@ -1068,10 +1212,75 @@
       </div>
     </aside>
 
+    <aside id="bitCalcPanel" class="formulas-panel" aria-label="Единицы информации">
+      <div class="formulas-header">
+        <div class="formulas-title">
+          <h3>Единицы информации</h3>
+          <p>Простой перевод между битами, байтами и более крупными единицами</p>
+        </div>
+        <button id="closeBitCalcBtn" title="Закрыть калькулятор единиц">✕</button>
+      </div>
+      <div class="info-builder-body">
+        <div class="info-builder-grid">
+          <label>Значение
+            <input id="bitInput" type="number" step="any" value="1" />
+          </label>
+          <label>Из единицы
+            <select id="bitFrom">
+              <option value="bit">бит</option>
+              <option value="byte">байт</option>
+              <option value="kb">КБ</option>
+              <option value="mb">МБ</option>
+              <option value="gb">ГБ</option>
+            </select>
+          </label>
+          <label>В единицу
+            <select id="bitTo">
+              <option value="byte">байт</option>
+              <option value="bit">бит</option>
+              <option value="kb">КБ</option>
+              <option value="mb">МБ</option>
+              <option value="gb">ГБ</option>
+            </select>
+          </label>
+        </div>
+        <div class="info-builder-actions">
+          <button id="calcBitsBtn" class="active" type="button">Посчитать</button>
+          <button id="insertBitsResultBtn" type="button">Вставить результат на доску</button>
+        </div>
+        <div class="info-result-card">
+          <div class="info-inline-result" id="bitResult">Результат появится здесь.</div>
+        </div>
+      </div>
+    </aside>
+
+    <aside id="logicPanel" class="formulas-panel" aria-label="Логика и таблицы истинности">
+      <div class="formulas-header">
+        <div class="formulas-title">
+          <h3>Таблица истинности</h3>
+          <p>Поддержка операторов: !, &, |, ^, →, =. Пример: (A & B) | !C</p>
+        </div>
+        <button id="closeLogicPanelBtn" title="Закрыть логику">✕</button>
+      </div>
+      <div class="info-builder-body">
+        <label>Логическое выражение
+          <input id="logicExpr" type="text" placeholder="Например: (A & B) | !C или (A and B) or not C" />
+        </label>
+        <div class="info-builder-actions">
+          <button id="buildTruthTableBtn" class="active" type="button">Построить таблицу</button>
+          <button id="insertTruthTableBtn" type="button">Вставить на доску</button>
+        </div>
+        <div class="info-result-card">
+          <div class="truth-meta" id="truthMeta">Таблица появится после построения.</div>
+          <div id="logicResult"></div>
+        </div>
+      </div>
+    </aside>
+
     <div class="board-wrap" id="boardWrap" tabindex="0">
       <canvas id="board"></canvas>
       <div class="hint">
-        Space — pan. Ctrl+колёсико — размер кисти. Ctrl+ЛКМ — выделение/перемещение. Добавить ▾ — перетащи фигуру на холст. Подписи вершин можно включить сверху. Панель можно свернуть. Всё сохраняется между сеансами автоматически.
+        Space — pan. Ctrl+колёсико — размер кисти. Ctrl+ЛКМ — выделение/перемещение. Добавить ▾ — перетащи фигуру на холст. Подписи вершин можно включить сверху. Панель можно свернуть. Двойной клик по ссылке открывает её. Всё сохраняется между сеансами автоматически.
       </div>
       <div class="status" id="status"></div>
     </div>
@@ -1095,6 +1304,7 @@
         eraser: document.getElementById('eraserTool'),
         objectEraser: document.getElementById('objectEraserTool'),
         text: document.getElementById('textTool'),
+        link: document.getElementById('linkTool'),
         note: document.getElementById('noteTool'),
       };
 
@@ -1133,6 +1343,27 @@
       const floatingToggleToolbarBtn = document.getElementById('floatingToggleToolbarBtn');
       const triangleMenuBtn = document.getElementById('triangleMenuBtn');
       const triangleSubmenu = document.getElementById('triangleSubmenu');
+      const subjectMath = document.getElementById('subjectMath');
+      const subjectInfo = document.getElementById('subjectInfo');
+      const mathLabelsPanel = document.getElementById('mathLabelsPanel');
+      const infoToolsPanel = document.getElementById('infoToolsPanel');
+      const bitCalcBtn = document.getElementById('bitCalcBtn');
+      const bitCalcPanel = document.getElementById('bitCalcPanel');
+      const closeBitCalcBtn = document.getElementById('closeBitCalcBtn');
+      const bitInput = document.getElementById('bitInput');
+      const bitFrom = document.getElementById('bitFrom');
+      const bitTo = document.getElementById('bitTo');
+      const calcBitsBtn = document.getElementById('calcBitsBtn');
+      const insertBitsResultBtn = document.getElementById('insertBitsResultBtn');
+      const bitResult = document.getElementById('bitResult');
+      const logicTableBtn = document.getElementById('logicTableBtn');
+      const logicPanel = document.getElementById('logicPanel');
+      const closeLogicPanelBtn = document.getElementById('closeLogicPanelBtn');
+      const logicExpr = document.getElementById('logicExpr');
+      const buildTruthTableBtn = document.getElementById('buildTruthTableBtn');
+      const insertTruthTableBtn = document.getElementById('insertTruthTableBtn');
+      const logicResult = document.getElementById('logicResult');
+      const truthMeta = document.getElementById('truthMeta');
 
       const state = {
         tool: 'brush',
@@ -1168,6 +1399,11 @@
         autoLabelVertices: false,
         toolbarCollapsed: false,
         lastFormulaInsert: null,
+        subjects: {
+          math: true,
+          info: false,
+        },
+        lastTruthTableText: '',
       };
 
       const palette = ['#111827', '#ef4444', '#f97316', '#eab308', '#22c55e', '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899', '#ffffff'];
@@ -2227,6 +2463,7 @@
             offsetY: state.offsetY,
             autoLabelVertices: state.autoLabelVertices,
             toolbarCollapsed: state.toolbarCollapsed,
+            subjects: state.subjects,
           };
           localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
         } catch (_) {}
@@ -2258,6 +2495,10 @@
           if (Number.isFinite(payload.offsetY)) state.offsetY = payload.offsetY;
           state.autoLabelVertices = !!payload.autoLabelVertices;
           state.toolbarCollapsed = !!payload.toolbarCollapsed;
+          if (payload.subjects && typeof payload.subjects === 'object') {
+            state.subjects.math = payload.subjects.math !== false;
+            state.subjects.info = !!payload.subjects.info;
+          }
         } catch (_) {}
       }
 
@@ -2298,7 +2539,7 @@
         if (state.spacePanMode) return 'grab';
         if (tool === 'brush') return 'crosshair';
         if (tool === 'eraser') return 'cell';
-        if (tool === 'text' || tool === 'note') return 'text';
+        if (tool === 'text' || tool === 'note' || tool === 'link') return 'text';
         if (tool === 'objectEraser') return 'not-allowed';
         return 'default';
       }
@@ -2365,7 +2606,7 @@
 
       function getObjectBounds(obj) {
         if (obj.type === 'path') return { x: obj.bounds.x, y: obj.bounds.y, width: obj.bounds.width, height: obj.bounds.height };
-        if (obj.type === 'text' || obj.type === 'note') {
+        if (obj.type === 'text' || obj.type === 'note' || obj.type === 'link') {
           const m = buildTextMetrics(obj, ctx);
           const pad = obj.type === 'note' ? 18 : 0;
           return { x: obj.x, y: obj.y, width: m.width + pad, height: m.height + pad };
@@ -2439,6 +2680,7 @@
 
       function drawTextObject(obj, targetCtx = ctx) {
         const isNote = obj.type === 'note';
+        const isLink = obj.type === 'link';
         const metrics = buildTextMetrics(obj, targetCtx);
         if (isNote) {
           targetCtx.save();
@@ -2448,11 +2690,23 @@
         }
         targetCtx.save();
         targetCtx.font = `${obj.fontWeight || 600} ${obj.fontSize || 24}px Inter, system-ui, sans-serif`;
-        targetCtx.fillStyle = isNote ? '#1f2937' : obj.color;
+        targetCtx.fillStyle = isNote ? '#1f2937' : (isLink ? (obj.color || '#2563eb') : obj.color);
         targetCtx.textBaseline = 'top';
         const startX = obj.x + (isNote ? 10 : 0);
         const startY = obj.y + (isNote ? 10 : 0);
-        metrics.lines.forEach((line, i) => targetCtx.fillText(line, startX, startY + i * metrics.lineHeight));
+        metrics.lines.forEach((line, i) => {
+          const lineY = startY + i * metrics.lineHeight;
+          targetCtx.fillText(line, startX, lineY);
+          if (isLink) {
+            const width = targetCtx.measureText(line || ' ').width;
+            targetCtx.beginPath();
+            targetCtx.lineWidth = Math.max(1, (obj.fontSize || 24) / 16);
+            targetCtx.strokeStyle = obj.color || '#2563eb';
+            targetCtx.moveTo(startX, lineY + metrics.lineHeight - 4);
+            targetCtx.lineTo(startX + width, lineY + metrics.lineHeight - 4);
+            targetCtx.stroke();
+          }
+        });
         targetCtx.restore();
       }
 
@@ -3252,7 +3506,7 @@
 
       function drawObject(obj, targetCtx = ctx) {
         if (obj.type === 'path') drawPath(obj, targetCtx);
-        else if (obj.type === 'text' || obj.type === 'note') drawTextObject(obj, targetCtx);
+        else if (obj.type === 'text' || obj.type === 'note' || obj.type === 'link') drawTextObject(obj, targetCtx);
         else if (obj.type === 'image') drawImageObject(obj, targetCtx);
         else if (obj.type === 'shape2d') drawShape2D(obj, targetCtx);
         else if (obj.type === 'shape3d') drawShape3D(obj, targetCtx);
@@ -3374,7 +3628,7 @@
             obj.y = box.y + (snap.y - box.y) * scaleY;
             obj.width = Math.max(20, snap.width * scaleX);
             obj.height = Math.max(20, snap.height * scaleY);
-          } else if (obj.type === 'text' || obj.type === 'note') {
+          } else if (obj.type === 'text' || obj.type === 'note' || obj.type === 'link') {
             obj.x = box.x + (snap.x - box.x) * scaleX;
             obj.y = box.y + (snap.y - box.y) * scaleY;
             obj.fontSize = Math.max(12, snap.fontSize * textScale);
@@ -3576,6 +3830,39 @@
       }
       function endDragObject() { state.isDraggingObject = false; }
 
+
+      function normalizeUrl(url) {
+        const raw = String(url || '').trim();
+        if (!raw) return '';
+        if (/^[a-zA-Z][a-zA-Z\d+.-]*:/.test(raw)) return raw;
+        return `https://${raw}`;
+      }
+
+      function createLinkObject(world) {
+        const urlInput = prompt('Вставь ссылку:', 'https://');
+        if (urlInput === null) return;
+        const url = normalizeUrl(urlInput);
+        if (!url) return;
+        const labelInput = prompt('Текст ссылки:', url.replace(/^https?:\/\//, ''));
+        if (labelInput === null) return;
+        const label = String(labelInput || '').trim() || url.replace(/^https?:\/\//, '');
+        saveHistory();
+        state.objects.push({
+          id: uid('link'),
+          type: 'link',
+          x: world.x,
+          y: world.y,
+          text: label,
+          url,
+          color: '#2563eb',
+          fontSize: Math.max(20, state.brushSize * 5),
+          fontWeight: 600
+        });
+        state.selectedId = null;
+        state.selectedIds = [];
+        render();
+      }
+
       function createTextEditor(world, type) {
         const existingEditor = boardWrap.querySelector('.floating-input');
         if (existingEditor) existingEditor.focus();
@@ -3716,6 +4003,259 @@
 
 
 
+
+
+      function toggleBitCalcPanel(force) {
+        const next = typeof force === 'boolean' ? force : !bitCalcPanel.classList.contains('open');
+        bitCalcPanel.classList.toggle('open', next);
+        bitCalcBtn.classList.toggle('active', next);
+        if (next) {
+          logicPanel.classList.remove('open');
+          logicTableBtn.classList.remove('active');
+        }
+      }
+
+      function toggleLogicPanel(force) {
+        const next = typeof force === 'boolean' ? force : !logicPanel.classList.contains('open');
+        logicPanel.classList.toggle('open', next);
+        logicTableBtn.classList.toggle('active', next);
+        if (next) {
+          bitCalcPanel.classList.remove('open');
+          bitCalcBtn.classList.remove('active');
+        }
+      }
+
+      function updateSubjectUi() {
+        const hasMath = !!state.subjects.math;
+        const hasInfo = !!state.subjects.info;
+
+        subjectMath.checked = hasMath;
+        subjectInfo.checked = hasInfo;
+
+        formulasBtn.style.display = hasMath ? '' : 'none';
+        graphBuilderBtn.style.display = hasMath ? '' : 'none';
+        if (mathLabelsPanel) mathLabelsPanel.style.display = hasMath ? '' : 'none';
+        if (infoToolsPanel) infoToolsPanel.style.display = hasInfo ? '' : 'none';
+
+        if (!hasMath) {
+          toggleFormulasPanel(false);
+          toggleGraphPanel(false);
+        }
+        if (!hasInfo) {
+          toggleBitCalcPanel(false);
+          toggleLogicPanel(false);
+        }
+      }
+
+      function insertPlainTextToBoard(textValue, title = '') {
+        const text = String(textValue || '').trim();
+        if (!text) return;
+        saveHistory();
+        const anchor = getNextFormulaAnchor();
+        const finalText = title ? `${title}\n${text}` : text;
+        const obj = {
+          id: uid('text'),
+          type: 'text',
+          x: anchor.x,
+          y: anchor.y,
+          text: finalText,
+          color: state.color || '#111827',
+          fontSize: 20,
+          fontWeight: 600,
+        };
+        state.objects.push(obj);
+        const metrics = buildTextMetrics(obj, ctx);
+        state.lastFormulaInsert = { x: anchor.x, y: anchor.y, height: metrics.height };
+        state.selectedId = obj.id;
+        state.selectedIds = [obj.id];
+        setTool('select');
+        render();
+      }
+
+      const BIT_UNITS = {
+        bit: { label: 'бит', bits: 1 },
+        byte: { label: 'байт', bits: 8 },
+        kb: { label: 'КБ', bits: 8 * 1024 },
+        mb: { label: 'МБ', bits: 8 * 1024 * 1024 },
+        gb: { label: 'ГБ', bits: 8 * 1024 * 1024 * 1024 },
+      };
+
+      function formatInfoNumber(value) {
+        if (!Number.isFinite(value)) return '—';
+        if (Math.abs(value) >= 1000000 || (Math.abs(value) > 0 && Math.abs(value) < 0.000001)) {
+          return value.toExponential(6).replace(/\.0+e/, 'e');
+        }
+        return Number(value.toFixed(6)).toString();
+      }
+
+      function calculateBitConversion() {
+        const amount = Number(bitInput.value);
+        const from = BIT_UNITS[bitFrom.value];
+        const to = BIT_UNITS[bitTo.value];
+        if (!Number.isFinite(amount) || !from || !to) {
+          bitResult.textContent = 'Проверь число и единицы.';
+          return '';
+        }
+        const bits = amount * from.bits;
+        const result = bits / to.bits;
+        const line = `${formatInfoNumber(amount)} ${from.label} = ${formatInfoNumber(result)} ${to.label}`;
+        bitResult.textContent = line;
+        return line;
+      }
+
+      function normalizeLogicExpression(input) {
+        return String(input || '')
+          .replace(/\bnot\b/gi, '!')
+          .replace(/\band\b/gi, '&')
+          .replace(/\bor\b/gi, '|')
+          .replace(/\bxor\b/gi, '^')
+          .replace(/\b(?:imp|impl|implies)\b/gi, '>')
+          .replace(/\b(?:eq|equiv)\b/gi, '=')
+          .replace(/↔|<->|=>|==/g, '=')
+          .replace(/→|->/g, '>')
+          .replace(/\+/g, '|')
+          .replace(/\s+/g, '');
+      }
+
+      function tokenizeLogic(expr) {
+        const source = normalizeLogicExpression(expr);
+        const tokens = [];
+        for (let i = 0; i < source.length; i += 1) {
+          const char = source[i];
+          if (/[A-Za-zА-Яа-я]/.test(char)) {
+            let name = char;
+            while (i + 1 < source.length && /[A-Za-zА-Яа-я0-9_]/.test(source[i + 1])) {
+              i += 1;
+              name += source[i];
+            }
+            tokens.push({ type: 'var', value: name.toUpperCase() });
+            continue;
+          }
+          if ('!&|^>=()'.includes(char)) {
+            tokens.push({ type: 'op', value: char });
+          }
+        }
+        return tokens;
+      }
+
+      function getLogicVariables(expr) {
+        return [...new Set(tokenizeLogic(expr).filter(t => t.type === 'var').map(t => t.value))]
+          .filter(Boolean)
+          .sort();
+      }
+
+      function logicToRpn(expr) {
+        const precedence = { '!': 5, '&': 4, '^': 3, '|': 2, '>': 1, '=': 0 };
+        const rightAssoc = new Set(['!']);
+        const output = [];
+        const ops = [];
+        tokenizeLogic(expr).forEach((token) => {
+          if (token.type === 'var') {
+            output.push(token);
+            return;
+          }
+          const op = token.value;
+          if (op === '(') {
+            ops.push(op);
+            return;
+          }
+          if (op === ')') {
+            while (ops.length && ops[ops.length - 1] !== '(') output.push({ type: 'op', value: ops.pop() });
+            if (ops[ops.length - 1] === '(') ops.pop();
+            return;
+          }
+          while (
+            ops.length &&
+            ops[ops.length - 1] !== '(' &&
+            (
+              precedence[ops[ops.length - 1]] > precedence[op] ||
+              (precedence[ops[ops.length - 1]] === precedence[op] && !rightAssoc.has(op))
+            )
+          ) {
+            output.push({ type: 'op', value: ops.pop() });
+          }
+          ops.push(op);
+        });
+        while (ops.length) output.push({ type: 'op', value: ops.pop() });
+        return output;
+      }
+
+      function evaluateLogicExpression(expr, scope) {
+        const rpn = logicToRpn(expr);
+        const stack = [];
+        rpn.forEach((token) => {
+          if (token.type === 'var') {
+            stack.push(!!scope[token.value]);
+            return;
+          }
+          if (token.value === '!') {
+            stack.push(!stack.pop());
+            return;
+          }
+          const right = !!stack.pop();
+          const left = !!stack.pop();
+          switch (token.value) {
+            case '&': stack.push(left && right); break;
+            case '|': stack.push(left || right); break;
+            case '^': stack.push(Boolean(left) !== Boolean(right)); break;
+            case '>': stack.push((!left) || right); break;
+            case '=': stack.push(Boolean(left) === Boolean(right)); break;
+            default: stack.push(false);
+          }
+        });
+        return !!stack.pop();
+      }
+
+      function buildTruthTableData(expr) {
+        const variables = getLogicVariables(expr);
+        if (!variables.length) throw new Error('Укажи хотя бы одну переменную, например A или B.');
+        if (variables.length > 6) throw new Error('Для простоты пока поддерживается до 6 переменных.');
+        const rows = [];
+        const rowCount = 2 ** variables.length;
+        for (let mask = 0; mask < rowCount; mask += 1) {
+          const scope = {};
+          variables.forEach((name, index) => {
+            scope[name] = Boolean((mask >> (variables.length - index - 1)) & 1);
+          });
+          rows.push({
+            scope,
+            result: evaluateLogicExpression(expr, scope),
+          });
+        }
+        return { variables, rows };
+      }
+
+      function renderTruthTable() {
+        const expr = logicExpr.value.trim();
+        if (!expr) {
+          truthMeta.textContent = 'Введи выражение, например: (A & B) | !C';
+          logicResult.innerHTML = '';
+          state.lastTruthTableText = '';
+          return '';
+        }
+        try {
+          const data = buildTruthTableData(expr);
+          const header = [...data.variables, 'F'].map(label => `<th>${escapeHtml(label)}</th>`).join('');
+          const body = data.rows.map((row) => {
+            const cells = data.variables.map((name) => `<td>${row.scope[name] ? 1 : 0}</td>`).join('');
+            return `<tr>${cells}<td>${row.result ? 1 : 0}</td></tr>`;
+          }).join('');
+          logicResult.innerHTML = `<table class="truth-table"><thead><tr>${header}</tr></thead><tbody>${body}</tbody></table>`;
+          truthMeta.textContent = `Переменные: ${data.variables.join(', ')} • строк: ${data.rows.length}`;
+          const lines = [
+            `Выражение: ${expr}`,
+            `Переменные: ${data.variables.join(', ')}`,
+            ...data.rows.map((row) => `${data.variables.map((name) => `${name}=${row.scope[name] ? 1 : 0}`).join('  ')}  =>  F=${row.result ? 1 : 0}`)
+          ];
+          state.lastTruthTableText = lines.join('\n');
+          return state.lastTruthTableText;
+        } catch (error) {
+          truthMeta.textContent = error.message || 'Не удалось разобрать выражение.';
+          logicResult.innerHTML = '';
+          state.lastTruthTableText = '';
+          return '';
+        }
+      }
 
       function toggleFormulasPanel(force) {
         const next = typeof force === 'boolean' ? force : !formulasPanel.classList.contains('open');
@@ -4281,7 +4821,14 @@
         reader.readAsDataURL(file);
       }
 
+      function isEditableElement(target) {
+        if (!target || !(target instanceof Element)) return false;
+        return Boolean(target.closest('input, textarea, select, [contenteditable="true"], .floating-input'));
+      }
+
       async function handlePaste(event) {
+        if (isEditableElement(event.target) || isEditableElement(document.activeElement)) return;
+
         const items = Array.from(event.clipboardData?.items || []);
         let handled = false;
         for (const item of items) {
@@ -4317,9 +4864,9 @@
         if (!state.selectedId) return;
         const obj = state.objects.find(o => o.id === state.selectedId);
         if (!obj) return;
-        if (obj.type === 'text' || obj.type === 'note') {
-          try { await navigator.clipboard.writeText(obj.text || ''); } catch (_) {}
-        }
+        const value = obj.type === 'link' ? (obj.url || obj.text || '') : (obj.text || '');
+        if (!value) return;
+        try { await navigator.clipboard.writeText(value); } catch (_) {}
       }
 
       function zoomAt(clientX, clientY, deltaY) {
@@ -4408,6 +4955,7 @@
           return;
         }
         if (state.tool === 'text') { createTextEditor(world, 'text'); return; }
+        if (state.tool === 'link') { createLinkObject(world); return; }
         if (state.tool === 'note') { createTextEditor(world, 'note'); return; }
 
         const hit = hitTest(world.x, world.y);
@@ -4415,6 +4963,16 @@
           state.selectedId = hit.id; state.selectedIds = [hit.id]; beginDragObject(hit, world);
         } else {
           state.selectedId = null; state.selectedIds = []; render();
+        }
+      });
+
+
+      canvas.addEventListener('dblclick', event => {
+        const pointer = getPointerPos(event);
+        const world = screenToWorld(pointer.x, pointer.y);
+        const hit = hitTest(world.x, world.y);
+        if (hit && hit.type === 'link' && hit.url) {
+          window.open(hit.url, '_blank', 'noopener,noreferrer');
         }
       });
 
@@ -4527,6 +5085,7 @@
         if (code === 'KeyB') setTool('brush');
         if (code === 'KeyE') setTool('eraser');
         if (code === 'KeyN') setTool('note');
+        if (code === 'KeyK') setTool('link');
         if (code === 'KeyO') setTool('objectEraser');
         if (code === 'KeyT' && !event.altKey) setTool('text');
       }, true);
@@ -4555,8 +5114,6 @@
 
       document.addEventListener('click', (event) => {
         if (!event.target.closest('.menu-wrap')) closeShapeMenu();
-        if (!event.target.closest('#formulasPanel') && !event.target.closest('#formulasBtn')) toggleFormulasPanel(false);
-        if (!event.target.closest('#graphPanel') && !event.target.closest('#graphBuilderBtn')) toggleGraphPanel(false);
       });
 
       shapeItems.forEach(item => {
@@ -4598,6 +5155,7 @@
       toolButtons.eraser.addEventListener('click', () => setTool('eraser'));
       toolButtons.objectEraser.addEventListener('click', () => setTool('objectEraser'));
       toolButtons.text.addEventListener('click', () => setTool('text'));
+      toolButtons.link.addEventListener('click', () => setTool('link'));
       toolButtons.note.addEventListener('click', () => setTool('note'));
       undoBtn.addEventListener('click', undo); redoBtn.addEventListener('click', redo); clearBtn.addEventListener('click', clearBoard);
       savePngBtn.addEventListener('click', exportBoardToPng);
@@ -4683,6 +5241,48 @@
         insertFormulaIntoBoard(card.dataset.insert || '', '', card);
       });
 
+
+      subjectMath.addEventListener('change', () => {
+        state.subjects.math = subjectMath.checked;
+        updateSubjectUi();
+        schedulePersist();
+      });
+      subjectInfo.addEventListener('change', () => {
+        state.subjects.info = subjectInfo.checked;
+        updateSubjectUi();
+        schedulePersist();
+      });
+
+      bitCalcBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        toggleBitCalcPanel();
+        calculateBitConversion();
+      });
+      closeBitCalcBtn.addEventListener('click', () => toggleBitCalcPanel(false));
+      calcBitsBtn.addEventListener('click', calculateBitConversion);
+      insertBitsResultBtn.addEventListener('click', () => {
+        const line = calculateBitConversion();
+        if (line) insertPlainTextToBoard(line, 'Единицы информации');
+      });
+
+      logicTableBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        toggleLogicPanel();
+        renderTruthTable();
+      });
+      closeLogicPanelBtn.addEventListener('click', () => toggleLogicPanel(false));
+      buildTruthTableBtn.addEventListener('click', renderTruthTable);
+      logicExpr.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          renderTruthTable();
+        }
+      });
+      insertTruthTableBtn.addEventListener('click', () => {
+        const textValue = renderTruthTable();
+        if (textValue) insertPlainTextToBoard(textValue, 'Таблица истинности');
+      });
+
       function updateSwatches() {
         [...swatchesEl.children].forEach((el, index) => el.classList.toggle('active', palette[index].toLowerCase() === state.color.toLowerCase()));
       }
@@ -4739,6 +5339,9 @@
       sizeRange.value = String(state.brushSize);
       sizeValue.textContent = `${state.brushSize} px`;
       autoLabelVerticesCheckbox.checked = state.autoLabelVertices;
+      updateSubjectUi();
+      calculateBitConversion();
+      renderTruthTable();
       updateUndoRedoButtons();
       applyToolbarCollapsedUi();
       resizeCanvas();
