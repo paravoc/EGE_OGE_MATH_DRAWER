@@ -40,33 +40,39 @@
     }
 
     #app {
+      position: relative;
       width: 100vw;
       height: 100vh;
-      display: flex;
-      flex-direction: column;
+      overflow: hidden;
     }
 
     .topbar {
-      height: 10vh;
-      min-height: 74px;
-      max-height: 118px;
-      padding: 12px 18px;
+      position: absolute;
+      top: 14px;
+      left: 96px;
+      right: 14px;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.52));
-      backdrop-filter: blur(20px) saturate(1.25);
-      border-bottom: 1px solid rgba(148,163,184,0.12);
-      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.06);
-      z-index: 10;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      padding: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0.18));
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 28px;
+      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.10);
+      backdrop-filter: blur(24px) saturate(1.2);
+      z-index: 30;
+      transition: transform 360ms cubic-bezier(.2,.8,.2,1), opacity 260ms ease, visibility 0s linear 360ms;
+      transform-origin: top center;
+      overflow: visible;
     }
 
     .toolbar-group {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
+      flex: 0 0 auto;
     }
 
     .panel {
@@ -91,8 +97,51 @@
 
     .panel.color-panel {
       overflow: visible;
-      padding-block: 14px;
+      padding-block: 10px;
     }
+    .left-toolbar {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      bottom: 14px;
+      z-index: 32;
+      width: 68px;
+      transition: width 320ms ease;
+      pointer-events: none;
+    }
+
+    .left-toolbar-shell {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: stretch;
+      pointer-events: auto;
+    }
+
+    .tool-dock-panel {
+      width: 100%;
+      flex: 1;
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      border-radius: 24px;
+    }
+
+    .left-toolbar-toggle {
+      width: 100%;
+      min-width: 0;
+      padding-inline: 0;
+      border-radius: 18px;
+    }
+
+    .left-toolbar-toggle .btn-icon {
+      transition: transform 320ms ease;
+    }
+
 
     .panel::before {
       content: "";
@@ -113,15 +162,15 @@
       position: relative;
       overflow: hidden;
       color: var(--text);
-      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(241,245,249,0.84));
-      border: 1px solid rgba(148,163,184,0.18);
+      background: linear-gradient(180deg, rgba(255,255,255,0.52), rgba(241,245,249,0.28));
+      border: 1px solid rgba(255,255,255,0.28);
       padding: 10px 12px;
-      border-radius: 999px;
+      border-radius: 16px;
       cursor: pointer;
-      transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease, border-color 220ms ease, opacity 220ms ease;
       min-height: 42px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 8px 18px rgba(15,23,42,0.06);
-      backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 10px 24px rgba(15,23,42,0.08);
+      backdrop-filter: blur(16px) saturate(1.15);
     }
 
     button::after {
@@ -133,6 +182,46 @@
       pointer-events: none;
     }
 
+
+
+    .glass-violet {
+      background: linear-gradient(180deg, rgba(139,92,246,0.28), rgba(124,58,237,0.14));
+      border-color: rgba(139,92,246,0.28);
+    }
+
+    .glass-blue {
+      background: linear-gradient(180deg, rgba(59,130,246,0.24), rgba(37,99,235,0.12));
+      border-color: rgba(59,130,246,0.26);
+    }
+
+    .glass-green {
+      background: linear-gradient(180deg, rgba(16,185,129,0.24), rgba(5,150,105,0.12));
+      border-color: rgba(16,185,129,0.26);
+    }
+
+    .glass-amber {
+      background: linear-gradient(180deg, rgba(245,158,11,0.24), rgba(217,119,6,0.12));
+      border-color: rgba(245,158,11,0.26);
+    }
+
+    .glass-rose {
+      background: linear-gradient(180deg, rgba(244,63,94,0.22), rgba(225,29,72,0.10));
+      border-color: rgba(244,63,94,0.24);
+    }
+
+    .glass-slate {
+      background: linear-gradient(180deg, rgba(148,163,184,0.24), rgba(100,116,139,0.12));
+      border-color: rgba(148,163,184,0.28);
+    }
+
+    .tool-icon-btn {
+      border-radius: 18px;
+    }
+
+    .tool-icon-btn .btn-label,
+    .icon-btn .btn-label {
+      font-weight: 600;
+    }
 
     .btn-icon {
       display: inline-flex;
@@ -407,7 +496,7 @@
     .board-wrap {
       position: relative;
       width: 100%;
-      height: 90vh;
+      height: 100vh;
       overflow: hidden;
       cursor: default;
       background:
@@ -593,33 +682,58 @@
 
     .toolbar-toggle-btn {
       position: fixed;
-      top: 72px;
-      right: 12px;
-      z-index: 40;
+      top: 16px;
+      right: 16px;
+      z-index: 60;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.96);
-      border: 1px solid rgba(15,23,42,0.08);
-      box-shadow: var(--shadow);
-      color: var(--text);
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px) scale(0.96);
+      transition: transform 320ms cubic-bezier(.2,.8,.2,1), opacity 220ms ease;
     }
 
     body.toolbar-collapsed .topbar {
-      display: none;
+      transform: translateY(-24px) scale(0.985);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
 
-    body.toolbar-collapsed .board-wrap {
-      height: 100vh;
+    body.toolbar-collapsed .toolbar-toggle-btn {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    body.left-toolbar-collapsed .left-toolbar {
+      width: 26px;
+    }
+
+    body.left-toolbar-collapsed .tool-dock-panel {
+      opacity: 0;
+      transform: translateX(-16px);
+      pointer-events: none;
+    }
+
+    body.left-toolbar-collapsed .left-toolbar-toggle .btn-icon {
+      transform: rotate(180deg);
+    }
+
+    body.topbar-offset-collapsed .formulas-panel,
+    body.toolbar-collapsed .formulas-panel {
+      top: 14px;
+      height: calc(100vh - 28px);
     }
 
     
 
     .formulas-panel {
       position: fixed;
-      top: 72px;
+      top: 88px;
       right: 14px;
       width: min(620px, calc(100vw - 28px));
       height: calc(100vh - 88px);
@@ -628,14 +742,29 @@
       border-radius: 20px;
       box-shadow: var(--shadow);
       z-index: 45;
-      display: none;
+      display: flex;
       flex-direction: column;
       overflow: hidden;
       backdrop-filter: blur(12px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateX(24px);
+      transition: transform 320ms ease, opacity 240ms ease, visibility 0s linear 320ms;
     }
 
     .formulas-panel.open {
-      display: flex;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(0);
+      transition: transform 320ms ease, opacity 240ms ease;
+    }
+
+    .formulas-header-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .formulas-header {
@@ -657,6 +786,41 @@
       margin: 3px 0 0;
       font-size: 12px;
       color: var(--muted);
+    }
+
+    .formulas-panel.is-collapsed {
+      width: 68px;
+      height: 72px;
+      min-height: 72px;
+      overflow: hidden;
+    }
+
+    .formulas-panel.is-collapsed .formulas-title,
+    .formulas-panel.is-collapsed .formulas-controls,
+    .formulas-panel.is-collapsed .formulas-list,
+    .formulas-panel.is-collapsed .graph-builder-body,
+    .formulas-panel.is-collapsed .info-builder-body {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .formulas-panel.is-collapsed .formulas-header {
+      border-bottom: none;
+      padding: 10px;
+      justify-content: center;
+    }
+
+    .formulas-panel.is-collapsed .formulas-header-actions {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .formulas-panel.is-collapsed #closeFormulasBtn {
+      display: none;
+    }
+
+    .formulas-panel.is-collapsed #collapseFormulasBtn .btn-icon {
+      transform: rotate(180deg);
     }
 
     .formulas-controls {
@@ -828,10 +992,6 @@
       background: rgba(15,23,42,0.02);
     }
 
-    body.toolbar-collapsed .formulas-panel {
-      top: 84px;
-      height: calc(100vh - 100px);
-    }
 
     
 
@@ -1246,11 +1406,12 @@
 
     @media (max-width: 1100px) {
       .topbar {
-        height: auto;
-        min-height: 92px;
-        padding: 10px;
-        flex-direction: column;
-        align-items: stretch;
+        left: 86px;
+        right: 10px;
+      }
+
+      .brand-copy p {
+        display: none;
       }
 
       .color-panel {
@@ -1261,9 +1422,22 @@
         width: 188px;
         min-width: 188px;
       }
+    }
 
-      .board-wrap {
-        height: calc(100vh - 112px);
+    @media (max-width: 760px) {
+      .left-toolbar {
+        bottom: auto;
+        width: 58px;
+      }
+
+      .topbar {
+        left: 78px;
+        right: 10px;
+        padding: 10px;
+      }
+
+      .brand-copy {
+        display: none;
       }
     }
   </style>
@@ -1288,6 +1462,23 @@
 </head>
 <body>
   <div id="app">
+    <aside id="leftToolbar" class="left-toolbar" aria-label="Инструменты">
+      <div class="left-toolbar-shell">
+        <button id="toggleLeftToolbarBtn" class="left-toolbar-toggle glass-blue" title="Свернуть или развернуть панель инструментов">
+          <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span>
+        </button>
+        <div class="panel tool-dock-panel" id="toolDockPanel">
+          <button id="selectTool" class="tool-icon-btn glass-slate" title="Выделение (V)" aria-label="Выделение"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M5 4l11 11"></path><path d="M5 4l4 14 3-6 6-3z"></path></svg></span></button>
+          <button id="brushTool" class="tool-icon-btn glass-violet active" title="Кисть (B)" aria-label="Кисть"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M14 6l4 4"></path><path d="M4 20c2.5 0 4-1 5-3l7-7-4-4-7 7c-2 1-3 2.5-3 5h2z"></path></svg></span></button>
+          <button id="eraserTool" class="tool-icon-btn glass-amber danger" title="Ластик мазков (E)" aria-label="Ластик мазков"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M8 18h10"></path><path d="M7 16l6-8 5 5-5 5H7l-3-3z"></path></svg></span></button>
+          <button id="objectEraserTool" class="tool-icon-btn glass-rose danger" title="Ластик объектов (O)" aria-label="Ластик объектов"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 7h12"></path><path d="M9 7V5h6v2"></path><path d="M8 7l1 12h6l1-12"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg></span></button>
+          <button id="textTool" class="tool-icon-btn glass-blue" title="Текст (Alt+T)" aria-label="Текст"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M5 6h14"></path><path d="M12 6v12"></path><path d="M8 18h8"></path></svg></span></button>
+          <button id="linkTool" class="tool-icon-btn glass-green" title="Ссылка (K)" aria-label="Ссылка"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"></path><path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"></path></svg></span></button>
+          <button id="noteTool" class="tool-icon-btn glass-amber" title="Заметка (N)" aria-label="Заметка"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M7 4h7l5 5v11H7z"></path><path d="M14 4v5h5"></path><path d="M10 13h4"></path><path d="M10 17h4"></path></svg></span></button>
+        </div>
+      </div>
+    </aside>
+
     <div class="topbar">
       <div class="toolbar-group">
         <div class="brand">
@@ -1298,20 +1489,11 @@
           </div>
         </div>
 
-        <div class="panel">
-          <button id="selectTool" class="tool-icon-btn" title="Выделение (V)" aria-label="Выделение"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M5 4l11 11"></path><path d="M5 4l4 14 3-6 6-3z"></path></svg></span></button>
-          <button id="brushTool" class="tool-icon-btn active" title="Кисть (B)" aria-label="Кисть"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M14 6l4 4"></path><path d="M4 20c2.5 0 4-1 5-3l7-7-4-4-7 7c-2 1-3 2.5-3 5h2z"></path></svg></span></button>
-          <button id="eraserTool" class="tool-icon-btn danger" title="Ластик мазков (E)" aria-label="Ластик мазков"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M8 18h10"></path><path d="M7 16l6-8 5 5-5 5H7l-3-3z"></path></svg></span></button>
-          <button id="objectEraserTool" class="tool-icon-btn danger" title="Ластик объектов (O)" aria-label="Ластик объектов"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 7h12"></path><path d="M9 7V5h6v2"></path><path d="M8 7l1 12h6l1-12"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg></span></button>
-          <button id="textTool" class="tool-icon-btn" title="Текст (Alt+T)" aria-label="Текст"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M5 6h14"></path><path d="M12 6v12"></path><path d="M8 18h8"></path></svg></span></button>
-          <button id="linkTool" class="tool-icon-btn" title="Ссылка (K)" aria-label="Ссылка"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"></path><path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"></path></svg></span></button>
-          <button id="noteTool" class="tool-icon-btn" title="Заметка (N)" aria-label="Заметка"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M7 4h7l5 5v11H7z"></path><path d="M14 4v5h5"></path><path d="M10 13h4"></path><path d="M10 17h4"></path></svg></span></button>
-        </div>
 
         <div class="panel menu-wrap">
-          <button id="addMenuBtn" title="Добавить фигуру или стрелку"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></span><span class="btn-label">Добавить</span><span class="btn-icon btn-caret"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg></span></button>
-          <button id="graphBuilderBtn" title="Открыть построение графиков"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="m7 15 4-4 3 2 4-6"></path></svg></span><span class="btn-label">Графики</span></button>
-          <button id="formulasBtn" title="Открыть вкладку с формулами ЕГЭ"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M7 6h11"></path><path d="M7 18h11"></path><path d="M9 6l-4 6 4 6"></path></svg></span><span class="btn-label">Формулы</span></button>
+          <button id="addMenuBtn" class="glass-violet" title="Добавить фигуру или стрелку"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></span><span class="btn-label">Добавить</span><span class="btn-icon btn-caret"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg></span></button>
+          <button id="graphBuilderBtn" class="glass-blue" title="Открыть построение графиков"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="m7 15 4-4 3 2 4-6"></path></svg></span><span class="btn-label">Графики</span></button>
+          <button id="formulasBtn" class="glass-green" title="Открыть вкладку с формулами ЕГЭ"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M7 6h11"></path><path d="M7 18h11"></path><path d="M9 6l-4 6 4 6"></path></svg></span><span class="btn-label">Формулы</span></button>
           <div class="shape-menu" id="shapeMenu">
             <div class="shape-section-title">2D фигуры</div>
             <div class="shape-grid">
@@ -1371,10 +1553,10 @@
         </div>
 
         <div class="panel info-panel-buttons" id="infoToolsPanel">
-          <button id="bitCalcBtn" title="Калькулятор бит, байт и единиц информации"><span class="btn-icon"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2"></rect><path d="M9 10h.01"></path><path d="M12 10h.01"></path><path d="M15 10h.01"></path><path d="M9 14h6"></path></svg></span><span class="btn-label">Единицы</span></button>
-          <button id="baseConvertBtn" title="Перевод чисел между системами счисления"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M7 7h4"></path><path d="M9 5v4"></path><path d="M14 7h4"></path><path d="M16 5v4"></path><path d="M6 14h12"></path><path d="m14 11 4 3-4 3"></path></svg></span><span class="btn-label">Системы</span></button>
-          <button id="codeBlockBtn" title="Блок кода с подсветкой синтаксиса"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m8 8-4 4 4 4"></path><path d="m16 8 4 4-4 4"></path><path d="m14 4-4 16"></path></svg></span><span class="btn-label">Код</span></button>
-          <button id="logicTableBtn" title="Таблица истинности"><span class="btn-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="6" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="M8 6h8"></path><path d="M6 8v8"></path><path d="M18 8v8"></path><path d="M8 18h8"></path></svg></span><span class="btn-label">Логика</span></button>
+          <button id="bitCalcBtn" class="glass-blue" title="Калькулятор бит, байт и единиц информации"><span class="btn-icon"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2"></rect><path d="M9 10h.01"></path><path d="M12 10h.01"></path><path d="M15 10h.01"></path><path d="M9 14h6"></path></svg></span><span class="btn-label">Единицы</span></button>
+          <button id="baseConvertBtn" class="glass-violet" title="Перевод чисел между системами счисления"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M7 7h4"></path><path d="M9 5v4"></path><path d="M14 7h4"></path><path d="M16 5v4"></path><path d="M6 14h12"></path><path d="m14 11 4 3-4 3"></path></svg></span><span class="btn-label">Системы</span></button>
+          <button id="codeBlockBtn" class="glass-green" title="Блок кода с подсветкой синтаксиса"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m8 8-4 4 4 4"></path><path d="m16 8 4 4-4 4"></path><path d="m14 4-4 16"></path></svg></span><span class="btn-label">Код</span></button>
+          <button id="logicTableBtn" class="glass-amber" title="Таблица истинности"><span class="btn-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="6" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="M8 6h8"></path><path d="M6 8v8"></path><path d="M18 8v8"></path><path d="M8 18h8"></path></svg></span><span class="btn-label">Логика</span></button>
         </div>
 
         <div class="panel" id="mathLabelsPanel">
@@ -1399,20 +1581,21 @@
 
       <div class="toolbar-group">
         <div class="panel">
-          <button id="toggleToolbarBtn" title="Свернуть или развернуть панель">Свернуть панель</button>
-          <button id="undoBtn" class="icon-btn" title="Undo (Ctrl+Z)" aria-label="Отменить"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"></path><path d="M20 20a8 8 0 0 0-8-8H4"></path></svg></span></button>
-          <button id="redoBtn" class="icon-btn" title="Redo (Ctrl+Shift+Z)" aria-label="Повторить"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"></path><path d="M4 20a8 8 0 0 1 8-8h8"></path></svg></span></button>
-          <button id="savePngBtn" title="Сохранить PNG"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 4v10"></path><path d="m8 10 4 4 4-4"></path><path d="M5 20h14"></path></svg></span><span class="btn-label">Сохранить PNG</span></button>
-          <button id="uploadImageBtn" title="Загрузить картинку"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 20V10"></path><path d="m8 14 4-4 4 4"></path><rect x="4" y="4" width="16" height="16" rx="3"></rect></svg></span><span class="btn-label">Загрузить картинку</span></button>
-          <button id="clearBtn" title="Очистить холст"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 7h12"></path><path d="M9 7V5h6v2"></path><path d="M8 7l1 12h6l1-12"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg></span><span class="btn-label">Очистить</span></button>
+          <button id="toggleToolbarBtn" class="glass-violet" title="Свернуть или развернуть панель">Свернуть панель</button>
+          <button id="undoBtn" class="icon-btn glass-blue" title="Undo (Ctrl+Z)" aria-label="Отменить"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"></path><path d="M20 20a8 8 0 0 0-8-8H4"></path></svg></span></button>
+          <button id="redoBtn" class="icon-btn glass-green" title="Redo (Ctrl+Shift+Z)" aria-label="Повторить"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"></path><path d="M4 20a8 8 0 0 1 8-8h8"></path></svg></span></button>
+          <button id="savePngBtn" class="glass-blue" title="Сохранить PNG"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 4v10"></path><path d="m8 10 4 4 4-4"></path><path d="M5 20h14"></path></svg></span><span class="btn-label">Сохранить PNG</span></button>
+          <button id="uploadImageBtn" class="glass-green" title="Загрузить картинку"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 20V10"></path><path d="m8 14 4-4 4 4"></path><rect x="4" y="4" width="16" height="16" rx="3"></rect></svg></span><span class="btn-label">Загрузить картинку</span></button>
+          <button id="clearBtn" class="glass-rose" title="Очистить холст"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 7h12"></path><path d="M9 7V5h6v2"></path><path d="M8 7l1 12h6l1-12"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg></span><span class="btn-label">Очистить</span></button>
           <input id="imageFileInput" type="file" accept="image/*" hidden />
         </div>
       </div>
     </div>
 
-    <button id="floatingToggleToolbarBtn" class="toolbar-toggle-btn" title="Свернуть или развернуть панель">Свернуть панель</button>
-
-    
+    <button id="floatingToggleToolbarBtn" class="toolbar-toggle-btn glass-violet" title="Развернуть верхнюю панель">
+      <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"></path></svg></span>
+      <span class="btn-label">Развернуть меню</span>
+    </button>
 
     <aside id="formulasPanel" class="formulas-panel" aria-label="Формулы">
       <div class="formulas-header">
@@ -1420,7 +1603,10 @@
           <h3>Формулы</h3>
           <p>Компактный справочник по основным формулам ЕГЭ</p>
         </div>
-        <button id="closeFormulasBtn" class="close-btn" title="Закрыть формулы" aria-label="Закрыть формулы"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 6l12 12"></path><path d="M18 6 6 18"></path></svg></span></button>
+        <div class="formulas-header-actions">
+          <button id="collapseFormulasBtn" class="close-btn glass-blue" title="Свернуть формулы" aria-label="Свернуть формулы"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"></path></svg></span></button>
+          <button id="closeFormulasBtn" class="close-btn glass-rose" title="Закрыть формулы" aria-label="Закрыть формулы"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 6l12 12"></path><path d="M18 6 6 18"></path></svg></span></button>
+        </div>
       </div>
       <div class="formulas-controls">
         <select id="formulaCategorySelect"></select>
@@ -1673,6 +1859,9 @@
       const graphShowIntersections = document.getElementById('graphShowIntersections');
       const formulasPanel = document.getElementById('formulasPanel');
       const closeFormulasBtn = document.getElementById('closeFormulasBtn');
+      const collapseFormulasBtn = document.getElementById('collapseFormulasBtn');
+      const leftToolbar = document.getElementById('leftToolbar');
+      const toggleLeftToolbarBtn = document.getElementById('toggleLeftToolbarBtn');
       const formulaCategorySelect = document.getElementById('formulaCategorySelect');
       const formulaTopicSelect = document.getElementById('formulaTopicSelect');
       const formulaSearchInput = document.getElementById('formulaSearchInput');
@@ -1682,7 +1871,7 @@
       const autoLabelVerticesCheckbox = document.getElementById('autoLabelVertices');
       const toggleToolbarBtn = document.getElementById('toggleToolbarBtn');
       const floatingToggleToolbarBtn = document.getElementById('floatingToggleToolbarBtn');
-      const triangleMenuBtn = document.getElementById('triangleMenuBtn');
+            const triangleMenuBtn = document.getElementById('triangleMenuBtn');
       const triangleSubmenu = document.getElementById('triangleSubmenu');
       const subjectMath = document.getElementById('subjectMath');
       const subjectInfo = document.getElementById('subjectInfo');
@@ -1761,6 +1950,8 @@
         resizeSnapshot: null,
         autoLabelVertices: false,
         toolbarCollapsed: false,
+        leftToolbarCollapsed: false,
+        formulasPanelCollapsed: false,
         lastFormulaInsert: null,
         subjects: {
           math: true,
@@ -2829,6 +3020,8 @@
             autoLabelVertices: state.autoLabelVertices,
             toolbarCollapsed: state.toolbarCollapsed,
             subjects: state.subjects,
+            leftToolbarCollapsed: state.leftToolbarCollapsed,
+            formulasPanelCollapsed: state.formulasPanelCollapsed,
           };
           localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
         } catch (_) {}
@@ -2841,9 +3034,36 @@
 
       function applyToolbarCollapsedUi() {
         document.body.classList.toggle('toolbar-collapsed', !!state.toolbarCollapsed);
-        const toggleText = state.toolbarCollapsed ? 'Развернуть панель' : 'Свернуть панель';
-        toggleToolbarBtn.textContent = toggleText;
-        if (floatingToggleToolbarBtn) floatingToggleToolbarBtn.textContent = toggleText;
+        const toggleText = state.toolbarCollapsed ? 'Развернуть верхнюю панель' : 'Свернуть верхнюю панель';
+        if (toggleToolbarBtn) {
+          toggleToolbarBtn.innerHTML = state.toolbarCollapsed
+            ? '<span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"></path></svg></span><span class="btn-label">Развернуть меню</span>'
+            : '<span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg></span><span class="btn-label">Свернуть меню</span>';
+          toggleToolbarBtn.title = toggleText;
+        }
+        if (floatingToggleToolbarBtn) {
+          floatingToggleToolbarBtn.title = toggleText;
+          floatingToggleToolbarBtn.innerHTML = state.toolbarCollapsed
+            ? '<span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"></path></svg></span><span class="btn-label">Развернуть меню</span>'
+            : '<span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg></span><span class="btn-label">Свернуть меню</span>';
+        }
+        document.body.classList.toggle('topbar-offset-collapsed', !!state.toolbarCollapsed);
+      }
+
+      function applyLeftToolbarCollapsedUi() {
+        document.body.classList.toggle('left-toolbar-collapsed', !!state.leftToolbarCollapsed);
+        if (toggleLeftToolbarBtn) {
+          toggleLeftToolbarBtn.title = state.leftToolbarCollapsed ? 'Развернуть панель инструментов' : 'Свернуть панель инструментов';
+        }
+      }
+
+      function applyFormulasPanelCollapsedUi() {
+        if (!formulasPanel) return;
+        formulasPanel.classList.toggle('is-collapsed', !!state.formulasPanelCollapsed);
+        if (collapseFormulasBtn) {
+          collapseFormulasBtn.title = state.formulasPanelCollapsed ? 'Развернуть формулы' : 'Свернуть формулы';
+          collapseFormulasBtn.setAttribute('aria-label', state.formulasPanelCollapsed ? 'Развернуть формулы' : 'Свернуть формулы');
+        }
       }
 
       function loadPersistedBoardState() {
@@ -2860,6 +3080,8 @@
           if (Number.isFinite(payload.offsetY)) state.offsetY = payload.offsetY;
           state.autoLabelVertices = !!payload.autoLabelVertices;
           state.toolbarCollapsed = !!payload.toolbarCollapsed;
+          state.leftToolbarCollapsed = !!payload.leftToolbarCollapsed;
+          state.formulasPanelCollapsed = !!payload.formulasPanelCollapsed;
           if (payload.subjects && typeof payload.subjects === 'object') {
             state.subjects.math = payload.subjects.math !== false;
             state.subjects.info = !!payload.subjects.info;
@@ -5239,7 +5461,17 @@
       function toggleFormulasPanel(force) {
         const next = typeof force === 'boolean' ? force : !formulasPanel.classList.contains('open');
         formulasPanel.classList.toggle('open', next);
+        if (next) {
+          state.formulasPanelCollapsed = false;
+          applyFormulasPanelCollapsedUi();
+        }
         formulasBtn.classList.toggle('active', next);
+      }
+
+      function toggleFormulasPanelCollapsed(force) {
+        state.formulasPanelCollapsed = typeof force === 'boolean' ? force : !state.formulasPanelCollapsed;
+        applyFormulasPanelCollapsedUi();
+        schedulePersist();
       }
 
       function buildFormulaSelectors() {
@@ -6149,8 +6381,16 @@
         schedulePersist();
       }
 
+      function toggleLeftToolbar() {
+        state.leftToolbarCollapsed = !state.leftToolbarCollapsed;
+        applyLeftToolbarCollapsedUi();
+        resizeCanvas();
+        schedulePersist();
+      }
+
       toggleToolbarBtn.addEventListener('click', toggleToolbar);
       if (floatingToggleToolbarBtn) floatingToggleToolbarBtn.addEventListener('click', toggleToolbar);
+      if (toggleLeftToolbarBtn) toggleLeftToolbarBtn.addEventListener('click', toggleLeftToolbar);
       uploadImageBtn.addEventListener('click', () => imageFileInput.click());
       imageFileInput.addEventListener('change', () => {
         const file = imageFileInput.files && imageFileInput.files[0];
@@ -6212,6 +6452,7 @@
         toggleFormulasPanel();
       });
       closeFormulasBtn.addEventListener('click', () => toggleFormulasPanel(false));
+      if (collapseFormulasBtn) collapseFormulasBtn.addEventListener('click', () => toggleFormulasPanelCollapsed());
       formulaCategorySelect.addEventListener('change', () => {
         updateFormulaTopicOptions();
         renderFormulaList();
