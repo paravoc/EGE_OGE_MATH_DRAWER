@@ -89,6 +89,11 @@
       overflow: visible;
     }
 
+    .panel.color-panel {
+      overflow: visible;
+      padding-block: 14px;
+    }
+
     .panel::before {
       content: "";
       position: absolute;
@@ -128,6 +133,59 @@
       pointer-events: none;
     }
 
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .btn-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .icon-btn,
+    .tool-icon-btn,
+    .close-btn {
+      padding-inline: 0;
+      width: 42px;
+      min-width: 42px;
+    }
+
+    .tool-icon-btn {
+      border-radius: 14px;
+    }
+
+    .close-btn {
+      border-radius: 12px;
+    }
+
+    .btn-label {
+      display: inline-block;
+      line-height: 1;
+    }
+
+    .btn-caret {
+      margin-left: -2px;
+      opacity: 0.7;
+    }
+
     button:hover {
       transform: translateY(-2px) scale(1.01);
       background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.92));
@@ -159,10 +217,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 184px;
-      min-width: 184px;
-      height: 52px;
+      width: 212px;
+      min-width: 212px;
+      height: 64px;
       gap: 0;
+      overflow: visible;
       --orbit: 0;
       --mx: 0px;
       --my: 0px;
@@ -205,6 +264,10 @@
       border-color: rgba(255,255,255,1);
       box-shadow: 0 0 0 5px rgba(124,58,237,0.16), 0 16px 34px rgba(15,23,42,0.18);
       z-index: 32;
+    }
+
+    .color-panel .swatch {
+      pointer-events: auto;
     }
 
     .swatches:not(:hover):not(.is-active) .swatch {
@@ -1001,6 +1064,186 @@
     }
 
 
+    .code-builder-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 180px;
+      gap: 10px;
+    }
+
+    .code-builder-grid .full-span {
+      grid-column: 1 / -1;
+    }
+
+    .code-editor-textarea {
+      min-height: 240px !important;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+      font-size: 14px !important;
+      line-height: 1.55 !important;
+      tab-size: 2;
+      white-space: pre;
+      overflow: auto;
+    }
+
+    .code-preview-shell {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(148,163,184,0.18);
+      background: #f8fafc;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+
+    .code-preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(148,163,184,0.14);
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(241,245,249,0.9));
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .code-preview-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--text);
+    }
+
+    .code-lang-badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.16);
+      background: rgba(255,255,255,0.94);
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    .code-preview-shell pre {
+      margin: 0;
+      padding: 16px 18px;
+      min-height: 180px;
+      overflow: auto;
+      background: #f8fafc !important;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .code-preview-shell code {
+      font-family: inherit !important;
+      white-space: pre;
+    }
+
+    .code-preview-shell .hljs {
+      display: block;
+      color: #0f172a;
+      background: transparent !important;
+    }
+
+    .code-preview-shell .hljs-comment,
+    .code-preview-shell .hljs-quote {
+      color: #64748b;
+      font-style: italic;
+    }
+
+    .code-preview-shell .hljs-keyword,
+    .code-preview-shell .hljs-selector-tag,
+    .code-preview-shell .hljs-literal,
+    .code-preview-shell .hljs-section,
+    .code-preview-shell .hljs-link,
+    .code-preview-shell .hljs-doctag,
+    .code-preview-shell .hljs-selector-id,
+    .code-preview-shell .hljs-selector-class,
+    .code-preview-shell .hljs-name,
+    .code-preview-shell .hljs-built_in {
+      color: #7c3aed;
+      font-weight: 700;
+    }
+
+    .code-preview-shell .hljs-title,
+    .code-preview-shell .hljs-title.class_,
+    .code-preview-shell .hljs-title.class,
+    .code-preview-shell .hljs-title.function_,
+    .code-preview-shell .hljs-function .hljs-title,
+    .code-preview-shell .hljs-variable,
+    .code-preview-shell .hljs-variable.language_,
+    .code-preview-shell .hljs-attr,
+    .code-preview-shell .hljs-attribute,
+    .code-preview-shell .hljs-property,
+    .code-preview-shell .hljs-params {
+      color: #2563eb;
+    }
+
+    .code-preview-shell .hljs-string,
+    .code-preview-shell .hljs-regexp,
+    .code-preview-shell .hljs-meta .hljs-string {
+      color: #16a34a;
+    }
+
+    .code-preview-shell .hljs-number,
+    .code-preview-shell .hljs-symbol,
+    .code-preview-shell .hljs-bullet,
+    .code-preview-shell .hljs-meta,
+    .code-preview-shell .hljs-meta .hljs-keyword,
+    .code-preview-shell .hljs-template-variable,
+    .code-preview-shell .hljs-type {
+      color: #ea580c;
+      font-weight: 600;
+    }
+
+    .code-preview-shell .hljs-operator,
+    .code-preview-shell .hljs-punctuation {
+      color: #334155;
+    }
+
+    .code-preview-shell .hljs-tag,
+    .code-preview-shell .hljs-selector-attr,
+    .code-preview-shell .hljs-selector-pseudo {
+      color: #be185d;
+    }
+
+    .code-preview-shell .hljs-subst {
+      color: #0f172a;
+    }
+
+    
+
+    .code-preview-shell .tok-comment { color: #6b7280; font-style: italic; }
+    .code-preview-shell .tok-keyword { color: #7c3aed; font-weight: 700; }
+    .code-preview-shell .tok-builtin { color: #2563eb; font-weight: 600; }
+    .code-preview-shell .tok-type { color: #0f766e; font-weight: 700; }
+    .code-preview-shell .tok-number { color: #b45309; }
+    .code-preview-shell .tok-string { color: #047857; }
+    .code-preview-shell .tok-operator { color: #be123c; font-weight: 600; }
+    .code-preview-shell .tok-function { color: #1d4ed8; font-weight: 700; }
+    .code-preview-shell .tok-class { color: #9333ea; font-weight: 700; }
+    .code-preview-shell .tok-variable { color: #111827; font-weight: 600; }
+    .code-preview-shell .tok-tag { color: #7c2d12; font-weight: 700; }
+    .code-preview-shell .tok-attr { color: #0369a1; }
+    .code-preview-shell .tok-punctuation { color: #475569; }
+    .code-preview-shell .tok-plain { color: #111827; }
+
+.code-helper-text {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--muted);
+      background: rgba(15,23,42,0.03);
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+
+    @media (max-width: 900px) {
+      .code-builder-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 1100px) {
       .topbar {
         height: auto;
@@ -1008,6 +1251,15 @@
         padding: 10px;
         flex-direction: column;
         align-items: stretch;
+      }
+
+      .color-panel {
+        justify-content: space-between;
+      }
+
+      .swatches {
+        width: 188px;
+        min-width: 188px;
       }
 
       .board-wrap {
@@ -1030,6 +1282,8 @@
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjs@12.4.2/lib/browser/math.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/highlight.min.js"></script>
 
 </head>
 <body>
@@ -1045,19 +1299,19 @@
         </div>
 
         <div class="panel">
-          <button id="selectTool" title="Выделение (V)">↖</button>
-          <button id="brushTool" class="active" title="Кисть (B)">🖌</button>
-          <button id="eraserTool" class="danger" title="Ластик мазков (E)">⌫</button>
-          <button id="objectEraserTool" class="danger" title="Ластик объектов (O)">🧹</button>
-          <button id="textTool" title="Текст (Alt+T)">T</button>
-          <button id="linkTool" title="Ссылка (K)">🔗</button>
-          <button id="noteTool" title="Заметка (N)">📝</button>
+          <button id="selectTool" class="tool-icon-btn" title="Выделение (V)" aria-label="Выделение"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M5 4l11 11"></path><path d="M5 4l4 14 3-6 6-3z"></path></svg></span></button>
+          <button id="brushTool" class="tool-icon-btn active" title="Кисть (B)" aria-label="Кисть"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M14 6l4 4"></path><path d="M4 20c2.5 0 4-1 5-3l7-7-4-4-7 7c-2 1-3 2.5-3 5h2z"></path></svg></span></button>
+          <button id="eraserTool" class="tool-icon-btn danger" title="Ластик мазков (E)" aria-label="Ластик мазков"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M8 18h10"></path><path d="M7 16l6-8 5 5-5 5H7l-3-3z"></path></svg></span></button>
+          <button id="objectEraserTool" class="tool-icon-btn danger" title="Ластик объектов (O)" aria-label="Ластик объектов"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 7h12"></path><path d="M9 7V5h6v2"></path><path d="M8 7l1 12h6l1-12"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg></span></button>
+          <button id="textTool" class="tool-icon-btn" title="Текст (Alt+T)" aria-label="Текст"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M5 6h14"></path><path d="M12 6v12"></path><path d="M8 18h8"></path></svg></span></button>
+          <button id="linkTool" class="tool-icon-btn" title="Ссылка (K)" aria-label="Ссылка"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"></path><path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"></path></svg></span></button>
+          <button id="noteTool" class="tool-icon-btn" title="Заметка (N)" aria-label="Заметка"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M7 4h7l5 5v11H7z"></path><path d="M14 4v5h5"></path><path d="M10 13h4"></path><path d="M10 17h4"></path></svg></span></button>
         </div>
 
         <div class="panel menu-wrap">
-          <button id="addMenuBtn" title="Добавить фигуру или стрелку">Добавить ▾</button>
-          <button id="graphBuilderBtn" title="Открыть построение графиков">📈 Графики</button>
-          <button id="formulasBtn" title="Открыть вкладку с формулами ЕГЭ">∑ Формулы</button>
+          <button id="addMenuBtn" title="Добавить фигуру или стрелку"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></span><span class="btn-label">Добавить</span><span class="btn-icon btn-caret"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"></path></svg></span></button>
+          <button id="graphBuilderBtn" title="Открыть построение графиков"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="m7 15 4-4 3 2 4-6"></path></svg></span><span class="btn-label">Графики</span></button>
+          <button id="formulasBtn" title="Открыть вкладку с формулами ЕГЭ"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M7 6h11"></path><path d="M7 18h11"></path><path d="M9 6l-4 6 4 6"></path></svg></span><span class="btn-label">Формулы</span></button>
           <div class="shape-menu" id="shapeMenu">
             <div class="shape-section-title">2D фигуры</div>
             <div class="shape-grid">
@@ -1117,8 +1371,10 @@
         </div>
 
         <div class="panel info-panel-buttons" id="infoToolsPanel">
-          <button id="bitCalcBtn" title="Калькулятор бит, байт и единиц информации">💾 Единицы</button>
-          <button id="logicTableBtn" title="Таблица истинности">🔀 Логика</button>
+          <button id="bitCalcBtn" title="Калькулятор бит, байт и единиц информации"><span class="btn-icon"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2"></rect><path d="M9 10h.01"></path><path d="M12 10h.01"></path><path d="M15 10h.01"></path><path d="M9 14h6"></path></svg></span><span class="btn-label">Единицы</span></button>
+          <button id="baseConvertBtn" title="Перевод чисел между системами счисления"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M7 7h4"></path><path d="M9 5v4"></path><path d="M14 7h4"></path><path d="M16 5v4"></path><path d="M6 14h12"></path><path d="m14 11 4 3-4 3"></path></svg></span><span class="btn-label">Системы</span></button>
+          <button id="codeBlockBtn" title="Блок кода с подсветкой синтаксиса"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m8 8-4 4 4 4"></path><path d="m16 8 4 4-4 4"></path><path d="m14 4-4 16"></path></svg></span><span class="btn-label">Код</span></button>
+          <button id="logicTableBtn" title="Таблица истинности"><span class="btn-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"></circle><circle cx="18" cy="6" r="2"></circle><circle cx="6" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle><path d="M8 6h8"></path><path d="M6 8v8"></path><path d="M18 8v8"></path><path d="M8 18h8"></path></svg></span><span class="btn-label">Логика</span></button>
         </div>
 
         <div class="panel" id="mathLabelsPanel">
@@ -1144,11 +1400,11 @@
       <div class="toolbar-group">
         <div class="panel">
           <button id="toggleToolbarBtn" title="Свернуть или развернуть панель">Свернуть панель</button>
-          <button id="undoBtn" class="icon-btn" title="Undo (Ctrl+Z)">←</button>
-          <button id="redoBtn" class="icon-btn" title="Redo (Ctrl+Shift+Z)">→</button>
-          <button id="savePngBtn" title="Сохранить PNG">Сохранить PNG</button>
-          <button id="uploadImageBtn" title="Загрузить картинку">Загрузить картинку</button>
-          <button id="clearBtn" title="Очистить холст">Очистить</button>
+          <button id="undoBtn" class="icon-btn" title="Undo (Ctrl+Z)" aria-label="Отменить"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"></path><path d="M20 20a8 8 0 0 0-8-8H4"></path></svg></span></button>
+          <button id="redoBtn" class="icon-btn" title="Redo (Ctrl+Shift+Z)" aria-label="Повторить"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"></path><path d="M4 20a8 8 0 0 1 8-8h8"></path></svg></span></button>
+          <button id="savePngBtn" title="Сохранить PNG"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 4v10"></path><path d="m8 10 4 4 4-4"></path><path d="M5 20h14"></path></svg></span><span class="btn-label">Сохранить PNG</span></button>
+          <button id="uploadImageBtn" title="Загрузить картинку"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 20V10"></path><path d="m8 14 4-4 4 4"></path><rect x="4" y="4" width="16" height="16" rx="3"></rect></svg></span><span class="btn-label">Загрузить картинку</span></button>
+          <button id="clearBtn" title="Очистить холст"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 7h12"></path><path d="M9 7V5h6v2"></path><path d="M8 7l1 12h6l1-12"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg></span><span class="btn-label">Очистить</span></button>
           <input id="imageFileInput" type="file" accept="image/*" hidden />
         </div>
       </div>
@@ -1164,7 +1420,7 @@
           <h3>Формулы</h3>
           <p>Компактный справочник по основным формулам ЕГЭ</p>
         </div>
-        <button id="closeFormulasBtn" title="Закрыть формулы">✕</button>
+        <button id="closeFormulasBtn" class="close-btn" title="Закрыть формулы" aria-label="Закрыть формулы"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 6l12 12"></path><path d="M18 6 6 18"></path></svg></span></button>
       </div>
       <div class="formulas-controls">
         <select id="formulaCategorySelect"></select>
@@ -1185,7 +1441,7 @@
           <h3>Построение графиков</h3>
           <p>Добавляй несколько функций и наборы точек прямо на доску</p>
         </div>
-        <button id="closeGraphPanelBtn" title="Закрыть графики">✕</button>
+        <button id="closeGraphPanelBtn" class="close-btn" title="Закрыть графики" aria-label="Закрыть графики"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 6l12 12"></path><path d="M18 6 6 18"></path></svg></span></button>
       </div>
       <div class="graph-builder-body">
         <div class="graph-builder-range">
@@ -1218,7 +1474,7 @@
           <h3>Единицы информации</h3>
           <p>Простой перевод между битами, байтами и более крупными единицами</p>
         </div>
-        <button id="closeBitCalcBtn" title="Закрыть калькулятор единиц">✕</button>
+        <button id="closeBitCalcBtn" class="close-btn" title="Закрыть калькулятор единиц" aria-label="Закрыть калькулятор единиц"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 6l12 12"></path><path d="M18 6 6 18"></path></svg></span></button>
       </div>
       <div class="info-builder-body">
         <div class="info-builder-grid">
@@ -1254,13 +1510,98 @@
       </div>
     </aside>
 
+    <aside id="baseConvertPanel" class="formulas-panel" aria-label="Системы счисления">
+      <div class="formulas-header">
+        <div class="formulas-title">
+          <h3>Системы счисления</h3>
+          <p>Перевод между основаниями от 2 до 36 с подробным разбором решения</p>
+        </div>
+        <button id="closeBaseConvertBtn" class="close-btn" title="Закрыть перевод систем счисления" aria-label="Закрыть перевод систем счисления"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 6l12 12"></path><path d="M18 6 6 18"></path></svg></span></button>
+      </div>
+      <div class="info-builder-body">
+        <div class="info-builder-grid">
+          <label>Число
+            <input id="baseInput" type="text" value="101101" placeholder="Например: 101101 или 2F" />
+          </label>
+          <label>Из основания
+            <input id="baseFrom" type="number" min="2" max="36" step="1" value="2" />
+          </label>
+          <label>В основание
+            <input id="baseTo" type="number" min="2" max="36" step="1" value="10" />
+          </label>
+        </div>
+        <div class="info-builder-actions">
+          <button id="convertBaseBtn" class="active" type="button">Перевести</button>
+          <button id="insertBaseResultBtn" type="button">Вставить результат на доску</button>
+        </div>
+        <div class="info-result-card">
+          <div class="info-inline-result" id="baseResult">Результат появится здесь.</div>
+        </div>
+      </div>
+    </aside>
+
+    <aside id="codePanel" class="formulas-panel" aria-label="Код с подсветкой синтаксиса">
+      <div class="formulas-header">
+        <div class="formulas-title">
+          <h3>Блок кода</h3>
+          <p>Пиши или вставляй код, выбирай язык и вставляй подсвеченный фрагмент на доску</p>
+        </div>
+        <button id="closeCodePanelBtn" class="close-btn" title="Закрыть блок кода" aria-label="Закрыть блок кода"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 6l12 12"></path><path d="M18 6 6 18"></path></svg></span></button>
+      </div>
+      <div class="info-builder-body">
+        <div class="code-builder-grid">
+          <label class="full-span">Название блока
+            <input id="codeTitleInput" type="text" value="Пример кода" placeholder="Например: Разбор алгоритма" />
+          </label>
+          <label>Язык
+            <select id="codeLanguageSelect">
+              <option value="python">Python</option>
+              <option value="cpp">C++</option>
+              <option value="javascript">JavaScript</option>
+              <option value="java">Java</option>
+              <option value="csharp">C#</option>
+              <option value="pascal">Pascal</option>
+              <option value="sql">SQL</option>
+              <option value="html">HTML</option>
+              <option value="css">CSS</option>
+              <option value="bash">Bash</option>
+              <option value="json">JSON</option>
+              <option value="plaintext">Текст без подсветки</option>
+              <option value="auto">Определить автоматически</option>
+            </select>
+          </label>
+          <label class="full-span">Код
+            <textarea id="codeInput" class="code-editor-textarea" spellcheck="false" placeholder="Вставь сюда код или напиши его сам">for i in range(3):
+    print(i)</textarea>
+          </label>
+        </div>
+        <div class="info-builder-actions">
+          <button id="copyCodeBtn" type="button">Скопировать код</button>
+          <button id="insertCodeResultBtn" class="active" type="button">Вставить на доску</button>
+          <button id="clearCodeBtn" type="button">Очистить</button>
+        </div>
+        <div class="code-helper-text">
+          Вводи код вручную или вставляй готовый. Подсветка обновляется автоматически. Tab добавляет отступ, Shift+Tab убирает отступ, Enter сохраняет нужный уровень табуляции, а скобки и кавычки подставляются автоматически. Двойной клик по блоку кода на доске открывает его для редактирования.
+        </div>
+        <div class="info-result-card">
+          <div id="codePreviewCapture" class="code-preview-shell">
+            <div class="code-preview-header">
+              <div id="codePreviewTitle" class="code-preview-title">Пример кода</div>
+              <div id="codePreviewLangBadge" class="code-lang-badge">PYTHON</div>
+            </div>
+            <pre><code id="codePreview" class="language-python">print(&quot;Hello, world!&quot;)</code></pre>
+          </div>
+        </div>
+      </div>
+    </aside>
+
     <aside id="logicPanel" class="formulas-panel" aria-label="Логика и таблицы истинности">
       <div class="formulas-header">
         <div class="formulas-title">
           <h3>Таблица истинности</h3>
           <p>Поддержка операторов: !, &, |, ^, →, =. Пример: (A & B) | !C</p>
         </div>
-        <button id="closeLogicPanelBtn" title="Закрыть логику">✕</button>
+        <button id="closeLogicPanelBtn" class="close-btn" title="Закрыть логику" aria-label="Закрыть логику"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 6l12 12"></path><path d="M18 6 6 18"></path></svg></span></button>
       </div>
       <div class="info-builder-body">
         <label>Логическое выражение
@@ -1356,6 +1697,28 @@
       const calcBitsBtn = document.getElementById('calcBitsBtn');
       const insertBitsResultBtn = document.getElementById('insertBitsResultBtn');
       const bitResult = document.getElementById('bitResult');
+      const baseConvertBtn = document.getElementById('baseConvertBtn');
+      const baseConvertPanel = document.getElementById('baseConvertPanel');
+      const closeBaseConvertBtn = document.getElementById('closeBaseConvertBtn');
+      const baseInput = document.getElementById('baseInput');
+      const baseFrom = document.getElementById('baseFrom');
+      const baseTo = document.getElementById('baseTo');
+      const convertBaseBtn = document.getElementById('convertBaseBtn');
+      const insertBaseResultBtn = document.getElementById('insertBaseResultBtn');
+      const baseResult = document.getElementById('baseResult');
+      const codeBlockBtn = document.getElementById('codeBlockBtn');
+      const codePanel = document.getElementById('codePanel');
+      const closeCodePanelBtn = document.getElementById('closeCodePanelBtn');
+      const codeTitleInput = document.getElementById('codeTitleInput');
+      const codeLanguageSelect = document.getElementById('codeLanguageSelect');
+      const codeInput = document.getElementById('codeInput');
+      const copyCodeBtn = document.getElementById('copyCodeBtn');
+      const insertCodeResultBtn = document.getElementById('insertCodeResultBtn');
+      const clearCodeBtn = document.getElementById('clearCodeBtn');
+      const codePreviewCapture = document.getElementById('codePreviewCapture');
+      const codePreviewTitle = document.getElementById('codePreviewTitle');
+      const codePreviewLangBadge = document.getElementById('codePreviewLangBadge');
+      const codePreview = document.getElementById('codePreview');
       const logicTableBtn = document.getElementById('logicTableBtn');
       const logicPanel = document.getElementById('logicPanel');
       const closeLogicPanelBtn = document.getElementById('closeLogicPanelBtn');
@@ -1404,6 +1767,8 @@
           info: false,
         },
         lastTruthTableText: '',
+        lastCodeBlockText: '',
+        editingCodeObjectId: null,
       };
 
       const palette = ['#111827', '#ef4444', '#f97316', '#eab308', '#22c55e', '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899', '#ffffff'];
@@ -2611,7 +2976,7 @@
           const pad = obj.type === 'note' ? 18 : 0;
           return { x: obj.x, y: obj.y, width: m.width + pad, height: m.height + pad };
         }
-        if (obj.type === 'image') return { x: obj.x, y: obj.y, width: obj.width, height: obj.height };
+        if (obj.type === 'image' || obj.type === 'codeBlock') return { x: obj.x, y: obj.y, width: obj.width, height: obj.height };
         if (obj.type === 'shape2d' || obj.type === 'shape3d' || obj.type === 'graph') return { x: obj.x, y: obj.y, width: obj.width, height: obj.height };
         return { x: 0, y: 0, width: 0, height: 0 };
       }
@@ -3507,7 +3872,7 @@
       function drawObject(obj, targetCtx = ctx) {
         if (obj.type === 'path') drawPath(obj, targetCtx);
         else if (obj.type === 'text' || obj.type === 'note' || obj.type === 'link') drawTextObject(obj, targetCtx);
-        else if (obj.type === 'image') drawImageObject(obj, targetCtx);
+        else if (obj.type === 'image' || obj.type === 'codeBlock') drawImageObject(obj, targetCtx);
         else if (obj.type === 'shape2d') drawShape2D(obj, targetCtx);
         else if (obj.type === 'shape3d') drawShape3D(obj, targetCtx);
         else if (obj.type === 'graph') drawGraphObject(obj, targetCtx);
@@ -3623,7 +3988,7 @@
             }));
             obj.size = Math.max(1, snap.size * textScale);
             updatePathBounds(obj);
-          } else if (obj.type === 'image') {
+          } else if (obj.type === 'image' || obj.type === 'codeBlock') {
             obj.x = box.x + (snap.x - box.x) * scaleX;
             obj.y = box.y + (snap.y - box.y) * scaleY;
             obj.width = Math.max(20, snap.width * scaleX);
@@ -4012,6 +4377,36 @@
         if (next) {
           logicPanel.classList.remove('open');
           logicTableBtn.classList.remove('active');
+          baseConvertPanel.classList.remove('open');
+          baseConvertBtn.classList.remove('active');
+          codePanel.classList.remove('open');
+          codeBlockBtn.classList.remove('active');
+          resetCodeEditorMode();
+        }
+      }
+
+      function toggleBaseConvertPanel(force) {
+        const next = typeof force === 'boolean' ? force : !baseConvertPanel.classList.contains('open');
+        baseConvertPanel.classList.toggle('open', next);
+        baseConvertBtn.classList.toggle('active', next);
+        if (next) {
+          bitCalcPanel.classList.remove('open');
+          bitCalcBtn.classList.remove('active');
+          logicPanel.classList.remove('open');
+          logicTableBtn.classList.remove('active');
+          codePanel.classList.remove('open');
+          codeBlockBtn.classList.remove('active');
+          resetCodeEditorMode();
+        }
+      }
+
+      function toggleCodePanel(force) {
+        const next = typeof force === 'boolean' ? force : !codePanel.classList.contains('open');
+        codePanel.classList.toggle('open', next);
+        codeBlockBtn.classList.toggle('active', next);
+        if (next) {
+          updateCodePreview();
+          requestAnimationFrame(() => codeInput.focus());
         }
       }
 
@@ -4022,6 +4417,10 @@
         if (next) {
           bitCalcPanel.classList.remove('open');
           bitCalcBtn.classList.remove('active');
+          baseConvertPanel.classList.remove('open');
+          baseConvertBtn.classList.remove('active');
+          codePanel.classList.remove('open');
+          codeBlockBtn.classList.remove('active');
         }
       }
 
@@ -4043,6 +4442,8 @@
         }
         if (!hasInfo) {
           toggleBitCalcPanel(false);
+          toggleBaseConvertPanel(false);
+          toggleCodePanel(false);
           toggleLogicPanel(false);
         }
       }
@@ -4098,8 +4499,586 @@
         }
         const bits = amount * from.bits;
         const result = bits / to.bits;
-        const line = `${formatInfoNumber(amount)} ${from.label} = ${formatInfoNumber(result)} ${to.label}`;
+        const steps = [
+          `1 ${from.label} = ${formatInfoNumber(from.bits)} бит.`,
+          `${formatInfoNumber(amount)} ${from.label} = ${formatInfoNumber(amount)} × ${formatInfoNumber(from.bits)} = ${formatInfoNumber(bits)} бит.`,
+          `1 ${to.label} = ${formatInfoNumber(to.bits)} бит.`,
+          `${formatInfoNumber(bits)} бит ÷ ${formatInfoNumber(to.bits)} = ${formatInfoNumber(result)} ${to.label}.`,
+          `Ответ: ${formatInfoNumber(amount)} ${from.label} = ${formatInfoNumber(result)} ${to.label}.`
+        ];
+        const line = steps.join('\n');
         bitResult.textContent = line;
+        return line;
+      }
+
+      const CODE_LANGUAGE_LABELS = {
+        python: 'Python',
+        cpp: 'C++',
+        javascript: 'JavaScript',
+        java: 'Java',
+        csharp: 'C#',
+        pascal: 'Pascal',
+        sql: 'SQL',
+        html: 'HTML',
+        css: 'CSS',
+        bash: 'Bash',
+        json: 'JSON',
+        plaintext: 'TEXT',
+        auto: 'AUTO',
+      };
+
+      const HIGHLIGHT_LANGUAGE_ALIASES = {
+        python: 'python',
+        cpp: 'cpp',
+        javascript: 'javascript',
+        java: 'java',
+        csharp: 'cs',
+        pascal: 'delphi',
+        sql: 'sql',
+        html: 'xml',
+        css: 'css',
+        bash: 'bash',
+        json: 'json',
+        plaintext: 'plaintext',
+      };
+
+
+      function escapeHtml(value) {
+        return String(value || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/\"/g, '&quot;');
+      }
+
+      function highlightMarkupCode(source) {
+        const escaped = escapeHtml(source);
+        return escaped
+          .replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span class="tok-comment">$1</span>')
+          .replace(/(&lt;\/?)([A-Za-z][\w:-]*)([^&]*?)(\/??&gt;)/g, (_, open, tag, attrs, close) => {
+            const attrsHighlighted = attrs.replace(/([A-Za-z_:][-A-Za-z0-9_:.]*)(\s*=\s*)(\"[^\"]*\"|'[^']*')/g,
+              '<span class="tok-attr">$1</span><span class="tok-operator">$2</span><span class="tok-string">$3</span>');
+            return `<span class="tok-punctuation">${open}</span><span class="tok-tag">${tag}</span>${attrsHighlighted}<span class="tok-punctuation">${close}</span>`;
+          });
+      }
+
+      function highlightCssCode(source) {
+        let html = escapeHtml(source);
+        html = html.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="tok-comment">$1</span>');
+        html = html.replace(/([.#]?[A-Za-z_][\w\-\s,.#>:]*)(\s*\{)/g, '<span class="tok-tag">$1</span><span class="tok-punctuation">$2</span>');
+        html = html.replace(/([a-zA-Z-]+)(\s*:)/g, '<span class="tok-attr">$1</span><span class="tok-punctuation">$2</span>');
+        html = html.replace(/(:\s*)(#[0-9a-fA-F]{3,8}|-?\d+(?:\.\d+)?(?:px|em|rem|%|vh|vw)?|[A-Za-z-]+)/g, '$1<span class="tok-number">$2</span>');
+        html = html.replace(/("[^"]*"|'[^']*')/g, '<span class="tok-string">$1</span>');
+        return html;
+      }
+
+      function highlightGenericCode(source, language) {
+        const KEYWORDS = {
+          python: ['if','elif','else','for','while','in','not','and','or','is','def','class','return','break','continue','try','except','finally','with','as','import','from','pass','lambda','yield','match','case','global','nonlocal','del','assert','raise','True','False','None'],
+          javascript: ['if','else','for','while','do','switch','case','break','continue','function','return','const','let','var','class','new','try','catch','finally','throw','import','from','export','default','async','await','true','false','null','undefined','of','in'],
+          cpp: ['if','else','for','while','do','switch','case','break','continue','return','class','struct','public','private','protected','virtual','template','typename','using','namespace','include','new','delete','try','catch','throw','const','constexpr','auto','static','void','int','double','float','char','bool','long','short','nullptr','true','false'],
+          java: ['if','else','for','while','do','switch','case','break','continue','return','class','interface','extends','implements','public','private','protected','static','final','new','try','catch','finally','throw','throws','import','package','void','int','double','float','char','boolean','long','short','null','true','false'],
+          csharp: ['if','else','for','while','do','switch','case','break','continue','return','class','interface','namespace','public','private','protected','internal','static','readonly','using','new','try','catch','finally','throw','void','int','double','float','char','bool','string','null','true','false','var'],
+          pascal: ['begin','end','var','const','type','program','uses','procedure','function','if','then','else','for','to','downto','while','do','repeat','until','case','of','break','continue','exit','integer','real','boolean','string','char','array','record','true','false','not','and','or','div','mod'],
+          sql: ['select','from','where','and','or','not','insert','into','values','update','set','delete','join','left','right','inner','outer','on','group','by','order','having','limit','as','distinct','create','table','drop','alter','null','is','in','like','between'],
+          bash: ['if','then','else','elif','fi','for','while','do','done','case','esac','in','function','return','echo','read','export','local'],
+          json: [],
+          plaintext: []
+        };
+        const BUILTINS = {
+          python: ['print','range','len','input','int','float','str','list','dict','set','tuple','sum','min','max','abs','enumerate'],
+          javascript: ['console','log','Math','Number','String','Array','Object','JSON','document','window'],
+          cpp: ['std','cout','cin','string','vector','map','set'],
+          java: ['System','String','Integer','Double','List','Map'],
+          csharp: ['Console','WriteLine','ReadLine','List','Dictionary'],
+          pascal: ['writeln','readln','write'],
+          sql: ['count','sum','avg','min','max'],
+          bash: ['echo','printf','cd','ls','cat','grep'],
+          json: []
+        };
+        const TYPES = {
+          cpp: ['int','long','short','double','float','char','bool','void','string','size_t'],
+          java: ['int','long','short','double','float','char','boolean','void','String'],
+          csharp: ['int','long','short','double','float','char','bool','void','string','decimal'],
+          pascal: ['integer','real','boolean','string','char','array','record'],
+          python: ['int','float','str','bool','list','dict','set','tuple'],
+          javascript: ['number','string','boolean','object']
+        };
+        const commentSyntax = {
+          python: ['#'],
+          javascript: ['//'],
+          cpp: ['//'],
+          java: ['//'],
+          csharp: ['//'],
+          sql: ['--'],
+          bash: ['#'],
+          pascal: []
+        };
+        const blockComments = new Set(['javascript','cpp','java','csharp','css']);
+        const pascalBlock = new Set(['pascal']);
+        const keywords = new Set(KEYWORDS[language] || []);
+        const builtins = new Set(BUILTINS[language] || []);
+        const types = new Set(TYPES[language] || []);
+        let i = 0;
+        let out = '';
+        while (i < source.length) {
+          const ch = source[i];
+          const next2 = source.slice(i, i + 2);
+          if (blockComments.has(language) && next2 === '/*') {
+            let j = i + 2;
+            while (j < source.length && source.slice(j, j + 2) !== '*/') j++;
+            j = Math.min(source.length, j + 2);
+            out += `<span class="tok-comment">${escapeHtml(source.slice(i, j))}</span>`;
+            i = j;
+            continue;
+          }
+          if (pascalBlock.has(language) && ch === '{') {
+            let j = i + 1;
+            while (j < source.length && source[j] !== '}') j++;
+            j = Math.min(source.length, j + 1);
+            out += `<span class="tok-comment">${escapeHtml(source.slice(i, j))}</span>`;
+            i = j;
+            continue;
+          }
+          if ((commentSyntax[language] || []).includes(next2)) {
+            let j = i;
+            while (j < source.length && source[j] !== '\n') j++;
+            out += `<span class="tok-comment">${escapeHtml(source.slice(i, j))}</span>`;
+            i = j;
+            continue;
+          }
+          if (commentSyntax[language] && commentSyntax[language][0] === '#' && ch === '#') {
+            let j = i;
+            while (j < source.length && source[j] !== '\n') j++;
+            out += `<span class="tok-comment">${escapeHtml(source.slice(i, j))}</span>`;
+            i = j;
+            continue;
+          }
+          if (language === 'pascal' && source.slice(i, i + 2) === '(*') {
+            let j = i + 2;
+            while (j < source.length && source.slice(j, j + 2) !== '*)') j++;
+            j = Math.min(source.length, j + 2);
+            out += `<span class="tok-comment">${escapeHtml(source.slice(i, j))}</span>`;
+            i = j;
+            continue;
+          }
+          if (ch === '"' || ch === "'") {
+            const quote = ch;
+            let j = i + 1;
+            while (j < source.length) {
+              if (source[j] === '\\') { j += 2; continue; }
+              if (source[j] === quote) { j++; break; }
+              j++;
+            }
+            out += `<span class="tok-string">${escapeHtml(source.slice(i, j))}</span>`;
+            i = j;
+            continue;
+          }
+          if (/\d/.test(ch)) {
+            let j = i + 1;
+            while (j < source.length && /[\d._xXa-fA-F]/.test(source[j])) j++;
+            out += `<span class="tok-number">${escapeHtml(source.slice(i, j))}</span>`;
+            i = j;
+            continue;
+          }
+          if (/[A-Za-z_А-Яа-я]/.test(ch)) {
+            let j = i + 1;
+            while (j < source.length && /[A-Za-z0-9_А-Яа-я]/.test(source[j])) j++;
+            const word = source.slice(i, j);
+            const lower = word.toLowerCase();
+            const rest = source.slice(j);
+            const nextNonSpace = (rest.match(/^\s*(.)/) || [null, ''])[1];
+            let cls = 'tok-plain';
+            if (keywords.has(word) || keywords.has(lower)) cls = 'tok-keyword';
+            else if (types.has(word) || types.has(lower)) cls = 'tok-type';
+            else if (builtins.has(word) || builtins.has(lower)) cls = 'tok-builtin';
+            else if (nextNonSpace === '(') cls = 'tok-function';
+            else if (/^[A-ZА-Я]/.test(word)) cls = 'tok-class';
+            else cls = 'tok-variable';
+            out += `<span class="${cls}">${escapeHtml(word)}</span>`;
+            i = j;
+            continue;
+          }
+          if (/[-+*/%=!<>|&^~?:]/.test(ch)) {
+            let j = i + 1;
+            while (j < source.length && /[-+*/%=!<>|&^~?:]/.test(source[j])) j++;
+            out += `<span class="tok-operator">${escapeHtml(source.slice(i, j))}</span>`;
+            i = j;
+            continue;
+          }
+          if (/[[\]{}().,;:]/.test(ch)) {
+            out += `<span class="tok-punctuation">${escapeHtml(ch)}</span>`;
+            i += 1;
+            continue;
+          }
+          out += escapeHtml(ch);
+          i += 1;
+        }
+        return out;
+      }
+
+      function simpleSyntaxHighlight(source, language) {
+        if (language === 'html') return highlightMarkupCode(source);
+        if (language === 'css') return highlightCssCode(source);
+        if (language === 'auto') {
+          const guess = /<\/?[A-Za-z]/.test(source) ? 'html' : (/\bdef\b|\bprint\(/.test(source) ? 'python' : 'javascript');
+          return simpleSyntaxHighlight(source, guess);
+        }
+        return highlightGenericCode(source, language);
+      }
+
+      function updateCodePreview() {
+        const source = String(codeInput.value || '');
+        const selectedLanguage = codeLanguageSelect.value || 'python';
+        const title = String(codeTitleInput.value || '').trim() || 'Пример кода';
+        codePreviewTitle.textContent = title;
+
+        const fallback = source || '# Код появится здесь';
+        codePreview.className = 'hljs';
+
+        const label = CODE_LANGUAGE_LABELS[selectedLanguage] || selectedLanguage.toUpperCase();
+        codePreviewLangBadge.textContent = label;
+
+        try {
+          codePreview.innerHTML = simpleSyntaxHighlight(fallback, selectedLanguage);
+        } catch (error) {
+          console.warn('Code highlight failed', error);
+          codePreview.textContent = fallback;
+        }
+
+        state.lastCodeBlockText = title ? `${title}\n${source}`.trim() : source.trim();
+        return state.lastCodeBlockText;
+      }
+
+      function resetCodeEditorMode() {
+        state.editingCodeObjectId = null;
+        insertCodeResultBtn.textContent = 'Вставить на доску';
+      }
+
+      function setCodeEditorModeForObject(obj) {
+        state.editingCodeObjectId = obj && obj.id ? obj.id : null;
+        insertCodeResultBtn.textContent = state.editingCodeObjectId ? 'Обновить блок на доске' : 'Вставить на доску';
+      }
+
+      function openCodeObjectEditor(obj) {
+        if (!obj || obj.type !== 'codeBlock') return;
+        codeTitleInput.value = obj.title || 'Пример кода';
+        codeLanguageSelect.value = obj.language || 'python';
+        codeInput.value = obj.code || '';
+        setCodeEditorModeForObject(obj);
+        toggleCodePanel(true);
+        updateCodePreview();
+        codeInput.focus();
+      }
+
+      function replaceSelectionValue(textarea, replacement, selectionStart = null, selectionEnd = null) {
+        const start = selectionStart == null ? textarea.selectionStart : selectionStart;
+        const end = selectionEnd == null ? textarea.selectionEnd : selectionEnd;
+        textarea.setRangeText(replacement, start, end, 'end');
+      }
+
+      function getLineInfo(value, caretIndex) {
+        const lineStart = value.lastIndexOf('\n', Math.max(0, caretIndex - 1)) + 1;
+        let lineEnd = value.indexOf('\n', caretIndex);
+        if (lineEnd === -1) lineEnd = value.length;
+        const lineText = value.slice(lineStart, lineEnd);
+        return { lineStart, lineEnd, lineText };
+      }
+
+      function handleCodeEditorKeydown(event) {
+        const textarea = event.currentTarget;
+        const value = textarea.value;
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const hasSelection = start !== end;
+        const PAIRS = { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'" };
+        const OPENERS = Object.keys(PAIRS);
+
+        if (event.key === 'Tab') {
+          event.preventDefault();
+          const indentUnit = '    ';
+          if (hasSelection) {
+            const selStart = start;
+            const selEnd = end;
+            const blockStart = value.lastIndexOf('\n', Math.max(0, selStart - 1)) + 1;
+            let blockEnd = value.indexOf('\n', selEnd);
+            if (blockEnd === -1) blockEnd = value.length;
+            const block = value.slice(blockStart, blockEnd);
+            const lines = block.split('\n');
+            if (event.shiftKey) {
+              const updated = lines.map(line => line.startsWith(indentUnit) ? line.slice(indentUnit.length) : (line.startsWith('\t') ? line.slice(1) : line));
+              textarea.setRangeText(updated.join('\n'), blockStart, blockEnd, 'select');
+            } else {
+              const updated = lines.map(line => indentUnit + line);
+              textarea.setRangeText(updated.join('\n'), blockStart, blockEnd, 'select');
+            }
+            updateCodePreview();
+            return;
+          }
+          if (event.shiftKey) {
+            const before = value.slice(0, start);
+            if (before.endsWith(indentUnit)) {
+              textarea.setRangeText('', start - indentUnit.length, start, 'end');
+            } else if (before.endsWith('\t')) {
+              textarea.setRangeText('', start - 1, start, 'end');
+            }
+          } else {
+            textarea.setRangeText(indentUnit, start, end, 'end');
+          }
+          updateCodePreview();
+          return;
+        }
+
+        if (OPENERS.includes(event.key)) {
+          const open = event.key;
+          const close = PAIRS[open];
+          const selected = value.slice(start, end);
+          const prev = value[start - 1] || '';
+          if ((open === '"' || open === "'") && /[A-Za-zА-Яа-я0-9_]/.test(prev)) return;
+          event.preventDefault();
+          const replacement = hasSelection ? `${open}${selected}${close}` : `${open}${close}`;
+          textarea.setRangeText(replacement, start, end, 'end');
+          const caret = hasSelection ? start + replacement.length : start + 1;
+          textarea.setSelectionRange(caret, caret);
+          updateCodePreview();
+          return;
+        }
+
+        if (event.key === 'Backspace' && !hasSelection) {
+          const prev = value[start - 1] || '';
+          const next = value[start] || '';
+          if (PAIRS[prev] === next) {
+            event.preventDefault();
+            textarea.setRangeText('', start - 1, start + 1, 'end');
+            updateCodePreview();
+            return;
+          }
+        }
+
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          const indentUnit = '    ';
+          const { lineStart, lineText } = getLineInfo(value, start);
+          const indent = (lineText.match(/^\s*/) || [''])[0];
+          const beforeCaret = value.slice(lineStart, start);
+          const beforeTrimmed = beforeCaret.trimEnd();
+          const nextChar = value[start] || '';
+          const shouldIndent = /[{:([\[]$/.test(beforeTrimmed);
+          const shouldCloseOnNextLine = shouldIndent && (nextChar === '}' || nextChar === ')' || nextChar === ']' );
+          const middleIndent = indent + (shouldIndent ? indentUnit : '');
+          const insertion = shouldCloseOnNextLine ? `\n${middleIndent}\n${indent}` : `\n${middleIndent}`;
+          textarea.setRangeText(insertion, start, end, 'end');
+          const caret = start + 1 + middleIndent.length;
+          textarea.setSelectionRange(caret, caret);
+          updateCodePreview();
+          return;
+        }
+      }
+
+      async function captureElementToPngData(element) {
+        if (!element) return null;
+        const htmlToImage = window.htmlToImage;
+        if (!htmlToImage || typeof htmlToImage.toPng !== 'function') return null;
+        try {
+          await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+          const bounds = element.getBoundingClientRect();
+          const width = Math.max(24, Math.ceil(bounds.width));
+          const height = Math.max(24, Math.ceil(bounds.height));
+          const dataUrl = await htmlToImage.toPng(element, {
+            backgroundColor: '#ffffff',
+            pixelRatio: 2,
+            cacheBust: true,
+            width,
+            height,
+            canvasWidth: width * 2,
+            canvasHeight: height * 2,
+            skipAutoScale: true,
+          });
+          return { url: dataUrl, width, height };
+        } catch (err) {
+          console.warn('captureElementToPngData failed', err);
+          return null;
+        }
+      }
+
+      async function insertCodeBlockToBoard() {
+        const textValue = updateCodePreview();
+        if (!textValue.trim()) return;
+        saveHistory();
+        const imageData = await captureElementToPngData(codePreviewCapture);
+        const editingObject = state.editingCodeObjectId ? state.objects.find(obj => obj.id === state.editingCodeObjectId) : null;
+
+        if (imageData) {
+          if (editingObject && editingObject.type === 'codeBlock') {
+            const nextWidth = Math.max(120, editingObject.width || imageData.width);
+            const aspect = imageData.height / Math.max(1, imageData.width);
+            editingObject.width = nextWidth;
+            editingObject.height = Math.max(80, nextWidth * aspect);
+            editingObject.src = imageData.url;
+            editingObject.img = null;
+            editingObject.title = String(codeTitleInput.value || '').trim() || 'Пример кода';
+            editingObject.language = codeLanguageSelect.value || 'python';
+            editingObject.code = String(codeInput.value || '');
+            state.selectedId = editingObject.id;
+            state.selectedIds = [editingObject.id];
+            setTool('select');
+            render();
+            return;
+          }
+
+          const anchor = getNextFormulaAnchor();
+          const maxWidth = Math.min(620, boardWrap.clientWidth * 0.7);
+          const scale = Math.min(1, maxWidth / imageData.width);
+          const width = Math.max(120, imageData.width * scale);
+          const height = Math.max(80, imageData.height * scale);
+          state.objects.push({
+            id: uid('code'),
+            type: 'codeBlock',
+            x: anchor.x,
+            y: anchor.y,
+            width,
+            height,
+            src: imageData.url,
+            title: String(codeTitleInput.value || '').trim() || 'Пример кода',
+            language: codeLanguageSelect.value || 'python',
+            code: String(codeInput.value || ''),
+          });
+          state.lastFormulaInsert = { x: anchor.x, y: anchor.y, height };
+          state.selectedId = state.objects[state.objects.length - 1].id;
+          state.selectedIds = [state.selectedId];
+          setTool('select');
+          render();
+          return;
+        }
+
+        insertPlainTextToBoard(textValue, 'Код');
+      }
+
+      const DIGITS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      function convertBigIntToBase(value, base) {
+        if (value === 0n) return '0';
+        const radix = BigInt(base);
+        let current = value < 0n ? -value : value;
+        let result = '';
+        while (current > 0n) {
+          const remainder = Number(current % radix);
+          result = DIGITS[remainder] + result;
+          current = current / radix;
+        }
+        return value < 0n ? `-${result}` : result;
+      }
+
+      function convertFractionDecimalToBase(fraction, base, maxSteps = 12) {
+        let current = fraction;
+        const digits = [];
+        const steps = [];
+        for (let i = 0; i < maxSteps && current > 0; i += 1) {
+          const multiplied = current * base;
+          const digit = Math.floor(multiplied + 1e-12);
+          digits.push(DIGITS[digit]);
+          steps.push(`${formatInfoNumber(current)} × ${base} = ${formatInfoNumber(multiplied)} → цифра ${DIGITS[digit]}`);
+          current = multiplied - digit;
+        }
+        return { digits: digits.join('') || '0', steps, truncated: current > 1e-12 };
+      }
+
+      function validateDigitsForBase(raw, base) {
+        const upper = raw.toUpperCase();
+        for (const char of upper) {
+          if (char === '.' || char === '-') continue;
+          const value = DIGITS.indexOf(char);
+          if (value < 0 || value >= base) return char;
+        }
+        return '';
+      }
+
+      function calculateBaseConversion() {
+        const rawInput = String(baseInput.value || '').trim().toUpperCase();
+        const fromBase = Number(baseFrom.value);
+        const toBase = Number(baseTo.value);
+        if (!rawInput) {
+          baseResult.textContent = 'Введите число.';
+          return '';
+        }
+        if (!Number.isInteger(fromBase) || !Number.isInteger(toBase) || fromBase < 2 || fromBase > 36 || toBase < 2 || toBase > 36) {
+          baseResult.textContent = 'Основания должны быть целыми числами от 2 до 36.';
+          return '';
+        }
+        if (!/^-?[0-9A-Z]+(?:\.[0-9A-Z]+)?$/.test(rawInput)) {
+          baseResult.textContent = 'Используй только цифры, латинские буквы и одну точку для дробной части.';
+          return '';
+        }
+        const badChar = validateDigitsForBase(rawInput, fromBase);
+        if (badChar) {
+          baseResult.textContent = `Символ ${badChar} нельзя использовать в системе с основанием ${fromBase}.`;
+          return '';
+        }
+
+        const negative = rawInput.startsWith('-');
+        const unsigned = negative ? rawInput.slice(1) : rawInput;
+        const [integerPartRaw, fractionalPartRaw = ''] = unsigned.split('.');
+        const integerPart = integerPartRaw || '0';
+
+        let decimalInteger = 0n;
+        const intSteps = [];
+        for (let i = 0; i < integerPart.length; i += 1) {
+          const char = integerPart[i];
+          const digit = BigInt(DIGITS.indexOf(char));
+          const power = BigInt(integerPart.length - i - 1);
+          const placeValue = BigInt(fromBase) ** power;
+          const contribution = digit * placeValue;
+          intSteps.push(`${char} × ${fromBase}^${power.toString()} = ${contribution.toString()}`);
+          decimalInteger += contribution;
+        }
+
+        let fractionDecimal = 0;
+        const fracSteps = [];
+        for (let i = 0; i < fractionalPartRaw.length; i += 1) {
+          const char = fractionalPartRaw[i];
+          const digit = DIGITS.indexOf(char);
+          const contribution = digit / (fromBase ** (i + 1));
+          fracSteps.push(`${char} × ${fromBase}^(-${i + 1}) = ${formatInfoNumber(contribution)}`);
+          fractionDecimal += contribution;
+        }
+
+        const targetInteger = convertBigIntToBase(decimalInteger, toBase);
+        const fractionConversion = fractionalPartRaw
+          ? convertFractionDecimalToBase(fractionDecimal, toBase)
+          : { digits: '', steps: [], truncated: false };
+        const targetUnsigned = fractionalPartRaw
+          ? `${targetInteger}.${fractionConversion.digits}`
+          : targetInteger;
+        const targetValue = negative && targetUnsigned !== '0' ? `-${targetUnsigned}` : targetUnsigned;
+        const decimalValueText = fractionalPartRaw
+          ? `${decimalInteger.toString()} + ${formatInfoNumber(fractionDecimal)} = ${formatInfoNumber(Number(decimalInteger) + fractionDecimal)}`
+          : decimalInteger.toString();
+
+        const parts = [
+          `Переводим ${rawInput}_${fromBase} в систему счисления по основанию ${toBase}.`,
+          '',
+          '1) Перевод в десятичную систему:',
+          `${integerPart.split('').join(' + ')} → ${intSteps.join(' + ')}`,
+          `Целая часть = ${decimalInteger.toString()}.`
+        ];
+        if (fracSteps.length) {
+          parts.push(`Дробная часть = ${fracSteps.join(' + ')} = ${formatInfoNumber(fractionDecimal)}.`);
+        }
+        parts.push(`Итак, в десятичной системе: ${negative ? '-' : ''}${decimalValueText}.`);
+        parts.push('');
+        parts.push(`2) Перевод из десятичной в систему по основанию ${toBase}:`);
+        parts.push(`Целая часть: ${decimalInteger.toString()}₁₀ = ${targetInteger}_${toBase}.`);
+        if (fractionalPartRaw) {
+          parts.push('Дробную часть последовательно умножаем на новое основание:');
+          parts.push(...fractionConversion.steps);
+          if (fractionConversion.truncated) {
+            parts.push('Дробная часть обрезана после 12 знаков.');
+          }
+        }
+        parts.push(`Ответ: ${rawInput}_${fromBase} = ${targetValue}_${toBase}.`);
+
+        const line = parts.join('\n');
+        baseResult.textContent = line;
         return line;
       }
 
@@ -4973,6 +5952,10 @@
         const hit = hitTest(world.x, world.y);
         if (hit && hit.type === 'link' && hit.url) {
           window.open(hit.url, '_blank', 'noopener,noreferrer');
+          return;
+        }
+        if (hit && hit.type === 'codeBlock') {
+          openCodeObjectEditor(hit);
         }
       });
 
@@ -5260,9 +6243,72 @@
       });
       closeBitCalcBtn.addEventListener('click', () => toggleBitCalcPanel(false));
       calcBitsBtn.addEventListener('click', calculateBitConversion);
+      bitInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          calculateBitConversion();
+        }
+      });
       insertBitsResultBtn.addEventListener('click', () => {
         const line = calculateBitConversion();
         if (line) insertPlainTextToBoard(line, 'Единицы информации');
+      });
+
+      baseConvertBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        toggleBaseConvertPanel();
+        calculateBaseConversion();
+      });
+      closeBaseConvertBtn.addEventListener('click', () => toggleBaseConvertPanel(false));
+      convertBaseBtn.addEventListener('click', calculateBaseConversion);
+      baseInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          calculateBaseConversion();
+        }
+      });
+      insertBaseResultBtn.addEventListener('click', () => {
+        const line = calculateBaseConversion();
+        if (line) insertPlainTextToBoard(line, 'Системы счисления');
+      });
+
+      codeBlockBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        toggleCodePanel();
+        updateCodePreview();
+      });
+      closeCodePanelBtn.addEventListener('click', () => toggleCodePanel(false));
+      codeTitleInput.addEventListener('input', updateCodePreview);
+      codeLanguageSelect.addEventListener('change', updateCodePreview);
+      codeInput.addEventListener('input', updateCodePreview);
+      codeInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Tab') {
+          event.preventDefault();
+          const start = codeInput.selectionStart;
+          const end = codeInput.selectionEnd;
+          const value = codeInput.value;
+          codeInput.value = `${value.slice(0, start)}  ${value.slice(end)}`;
+          codeInput.selectionStart = codeInput.selectionEnd = start + 2;
+          updateCodePreview();
+        }
+      });
+      copyCodeBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(codeInput.value || '');
+          copyCodeBtn.textContent = 'Скопировано';
+          setTimeout(() => { copyCodeBtn.textContent = 'Скопировать код'; }, 1200);
+        } catch (error) {
+          console.warn('Clipboard copy failed', error);
+          copyCodeBtn.textContent = 'Не удалось';
+          setTimeout(() => { copyCodeBtn.textContent = 'Скопировать код'; }, 1200);
+        }
+      });
+      clearCodeBtn.addEventListener('click', () => {
+        codeInput.value = '';
+        updateCodePreview();
+      });
+      insertCodeResultBtn.addEventListener('click', async () => {
+        await insertCodeBlockToBoard();
       });
 
       logicTableBtn.addEventListener('click', (event) => {
@@ -5282,6 +6328,9 @@
         const textValue = renderTruthTable();
         if (textValue) insertPlainTextToBoard(textValue, 'Таблица истинности');
       });
+
+      updateCodePreview();
+      window.addEventListener('load', updateCodePreview);
 
       function updateSwatches() {
         [...swatchesEl.children].forEach((el, index) => el.classList.toggle('active', palette[index].toLowerCase() === state.color.toLowerCase()));
