@@ -8,8 +8,8 @@
     :root {
       --bg: #f3f7ff;
       --bg-secondary: #eef4ff;
-      --panel: rgba(255, 255, 255, 0.68);
-      --panel-strong: rgba(255, 255, 255, 0.84);
+      --panel: rgba(255, 255, 255, 0.42);
+      --panel-strong: rgba(255, 255, 255, 0.58);
       --panel-border: rgba(148, 163, 184, 0.18);
       --panel-border-strong: rgba(124, 58, 237, 0.16);
       --text: #0f172a;
@@ -56,15 +56,27 @@
       align-items: stretch;
       gap: 10px;
       padding: 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0.18));
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
       border: 1px solid rgba(255,255,255,0.28);
       border-radius: 28px;
       box-shadow: 0 22px 60px rgba(15, 23, 42, 0.10);
-      backdrop-filter: blur(24px) saturate(1.2);
+      backdrop-filter: blur(10px) saturate(1.08);
       z-index: 30;
-      transition: transform 360ms cubic-bezier(.2,.8,.2,1), opacity 260ms ease, visibility 0s linear 360ms;
       transform-origin: top center;
-      overflow: visible;
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      visibility: visible;
+      max-height: 260px;
+      overflow: hidden;
+      will-change: transform, opacity, max-height, filter;
+      filter: blur(0px);
+      transition:
+        transform 680ms cubic-bezier(.22,1,.36,1),
+        opacity 520ms ease,
+        max-height 680ms cubic-bezier(.22,1,.36,1),
+        filter 520ms ease,
+        box-shadow 520ms ease,
+        visibility 0s linear 680ms;
     }
 
     .toolbar-group {
@@ -79,7 +91,7 @@
       position: relative;
       overflow: hidden;
       isolation: isolate;
-      background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.56));
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.015));
       border: 1px solid var(--panel-border);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
@@ -87,7 +99,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      backdrop-filter: blur(18px) saturate(1.2);
+      backdrop-filter: blur(8px) saturate(1.06);
     }
 
 
@@ -106,8 +118,9 @@
       bottom: 14px;
       z-index: 32;
       width: 68px;
-      transition: width 320ms ease;
+      transition: width 520ms cubic-bezier(.22,1,.36,1);
       pointer-events: none;
+      overflow: visible;
     }
 
     .left-toolbar-shell {
@@ -117,6 +130,7 @@
       gap: 10px;
       align-items: stretch;
       pointer-events: auto;
+      overflow: visible;
     }
 
     .tool-dock-panel {
@@ -129,6 +143,16 @@
       justify-content: flex-start;
       gap: 10px;
       border-radius: 24px;
+      overflow: visible;
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      transform-origin: left center;
+      will-change: transform, opacity, filter;
+      filter: blur(0px);
+      transition:
+        transform 620ms cubic-bezier(.22,1,.36,1),
+        opacity 460ms ease,
+        filter 460ms ease;
     }
 
     .left-toolbar-toggle {
@@ -140,6 +164,75 @@
 
     .left-toolbar-toggle .btn-icon {
       transition: transform 320ms ease;
+    }
+
+
+    .left-add-wrap {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .left-add-btn {
+      width: 100%;
+      min-width: 0;
+      min-height: 52px;
+      border-radius: 18px;
+      padding: 10px 8px;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .left-add-btn .btn-label {
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .left-shape-menu {
+      position: absolute;
+      top: 0;
+      left: calc(100% + 12px);
+      width: 320px;
+      max-height: min(78vh, 760px);
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 14px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.34);
+      box-shadow: 0 26px 70px rgba(15,23,42,0.16);
+      backdrop-filter: blur(10px) saturate(1.08);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateX(-12px) scale(0.98);
+      filter: blur(10px);
+      transform-origin: left center;
+      transition:
+        opacity 320ms ease,
+        transform 420ms cubic-bezier(.22,1,.36,1),
+        filter 320ms ease,
+        visibility 0s linear 420ms;
+      z-index: 80;
+    }
+
+    .left-shape-menu.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(0) scale(1);
+      filter: blur(0px);
+      transition:
+        opacity 320ms ease,
+        transform 420ms cubic-bezier(.22,1,.36,1),
+        filter 320ms ease;
+    }
+
+    .left-shape-menu .shape-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
 
@@ -394,9 +487,9 @@
     .status {
       position: absolute;
       right: 18px;
-      bottom: 18px;
+      bottom: 76px;
       z-index: 3;
-      background: rgba(255,255,255,0.94);
+      background: rgba(255,255,255,0.08);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(15,23,42,0.08);
       border-radius: 14px;
@@ -412,7 +505,7 @@
       left: 18px;
       bottom: 18px;
       z-index: 3;
-      background: rgba(255,255,255,0.94);
+      background: rgba(255,255,255,0.08);
       border: 1px solid rgba(15,23,42,0.08);
       border-radius: 14px;
       padding: 10px 12px;
@@ -420,6 +513,151 @@
       color: var(--muted);
       max-width: 460px;
       line-height: 1.45;
+    }
+
+    .help-fab {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      z-index: 12;
+      width: 46px;
+      height: 46px;
+      min-width: 46px;
+      min-height: 46px;
+      border-radius: 999px;
+      padding: 0;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+      border: 1px solid rgba(148,163,184,0.22);
+      box-shadow: 0 14px 28px rgba(15,23,42,0.10);
+    }
+
+    .help-fab:hover {
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .help-panel {
+      position: absolute;
+      right: 18px;
+      bottom: 74px;
+      z-index: 14;
+      width: min(420px, calc(100vw - 36px));
+      max-height: min(72vh, 720px);
+      overflow: auto;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(148,163,184,0.18);
+      box-shadow: 0 24px 60px rgba(15,23,42,0.14);
+      backdrop-filter: blur(10px) saturate(1.05);
+      -webkit-backdrop-filter: blur(10px) saturate(1.05);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(10px) scale(0.98);
+      transition: opacity 220ms ease, transform 260ms ease, visibility 0s linear 260ms;
+    }
+
+    .help-panel.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+      transition: opacity 220ms ease, transform 260ms ease;
+    }
+
+    .help-panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .help-panel-title {
+      min-width: 0;
+    }
+
+    .help-panel-title h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .help-panel-title p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .help-close-btn {
+      width: 38px;
+      min-width: 38px;
+      min-height: 38px;
+      border-radius: 12px;
+      padding: 0;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .help-section {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(148,163,184,0.12);
+    }
+
+    .help-section:first-of-type {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .help-section h4 {
+      margin: 0 0 8px;
+      font-size: 13px;
+    }
+
+    .help-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .help-item {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .help-kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(148,163,184,0.16);
+      font-weight: 700;
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+      text-align: center;
+    }
+
+    .help-note {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(148,163,184,0.14);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
     }
 
     .floating-input {
@@ -432,7 +670,7 @@
       overflow: auto;
       border-radius: 10px;
       border: 1px solid rgba(15,23,42,0.14);
-      background: rgba(255,255,255,0.98);
+      background: rgba(255,255,255,0.08);
       color: #0f172a;
       font: 500 20px/1.35 Inter, system-ui, sans-serif;
       box-shadow: var(--shadow);
@@ -524,19 +762,19 @@
     .shape-menu,
     .floating-input,
     .toolbar-toggle-btn {
-      backdrop-filter: blur(18px) saturate(1.18);
+      backdrop-filter: blur(8px) saturate(1.05);
     }
 
     .status,
     .hint {
-      background: rgba(255,255,255,0.74);
+      background: rgba(255,255,255,0.07);
       border: 1px solid rgba(148,163,184,0.16);
       box-shadow: 0 18px 36px rgba(15,23,42,0.08);
     }
 
     .shape-menu,
     .formulas-panel {
-      background: rgba(255,255,255,0.82);
+      background: rgba(255,255,255,0.08);
       border: 1px solid rgba(148,163,184,0.18);
       box-shadow: 0 26px 70px rgba(15,23,42,0.14);
     }
@@ -545,7 +783,7 @@
     .formula-card,
     .formula-table-wrap {
       border-color: rgba(148,163,184,0.14);
-      background: linear-gradient(180deg, rgba(255,255,255,0.80), rgba(248,250,252,0.72));
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(248,250,252,0.10));
     }
 
     .shape-item:hover,
@@ -556,7 +794,7 @@
     .floating-input {
       border-radius: 16px;
       border: 1px solid rgba(148,163,184,0.18);
-      background: rgba(255,255,255,0.88);
+      background: rgba(255,255,255,0.16);
     }
 
     .logo {
@@ -580,10 +818,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+      html {
         scroll-behavior: auto !important;
       }
     }
@@ -605,7 +840,7 @@
       flex-direction: column;
       gap: 10px;
       padding: 12px;
-      background: rgba(255,255,255,0.98);
+      background: rgba(255,255,255,0.08);
       border: 1px solid rgba(15,23,42,0.12);
       border-radius: 16px;
       box-shadow: var(--shadow);
@@ -638,13 +873,13 @@
       padding: 10px;
       border-radius: 12px;
       border: 1px solid rgba(15,23,42,0.08);
-      background: rgba(15,23,42,0.03);
+      background: rgba(15,23,42,0.035);
       cursor: grab;
       user-select: none;
     }
 
     .shape-item:hover {
-      background: rgba(15,23,42,0.06);
+      background: rgba(255,255,255,0.12);
     }
 
     .shape-item:active {
@@ -680,10 +915,10 @@
       cursor: pointer;
     }
 
-    .toolbar-toggle-btn {
+    .toolbar-toggle-btn,
+    .right-panel-expand-btn,
+    .left-panel-expand-btn {
       position: fixed;
-      top: 16px;
-      right: 16px;
       z-index: 60;
       display: inline-flex;
       align-items: center;
@@ -692,21 +927,54 @@
       border-radius: 16px;
       opacity: 0;
       pointer-events: none;
-      transform: translateY(-10px) scale(0.96);
-      transition: transform 320ms cubic-bezier(.2,.8,.2,1), opacity 220ms ease;
+      transform: translateY(-8px) scale(0.96);
+      transition:
+        transform 560ms cubic-bezier(.22,1,.36,1),
+        opacity 420ms ease,
+        filter 420ms ease;
+      filter: blur(6px);
+    }
+
+    .toolbar-toggle-btn {
+      top: 16px;
+      right: 16px;
+    }
+
+    .left-panel-expand-btn {
+      top: 50%;
+      left: 16px;
+      transform: translateY(-50%) translateX(-10px) scale(0.96);
+    }
+
+    .right-panel-expand-btn {
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%) translateX(10px) scale(0.96);
+    }
+
+
+    .right-panel-expand-btn.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(-50%) translateX(0) scale(1);
+      filter: blur(0px);
     }
 
     body.toolbar-collapsed .topbar {
-      transform: translateY(-24px) scale(0.985);
+      transform: translateY(-22px) scale(0.985);
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
+      max-height: 0;
+      filter: blur(10px);
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.04);
     }
 
     body.toolbar-collapsed .toolbar-toggle-btn {
       opacity: 1;
       pointer-events: auto;
       transform: translateY(0) scale(1);
+      filter: blur(0px);
     }
 
     body.left-toolbar-collapsed .left-toolbar {
@@ -715,8 +983,16 @@
 
     body.left-toolbar-collapsed .tool-dock-panel {
       opacity: 0;
-      transform: translateX(-16px);
+      transform: translateX(-20px) scale(0.94);
+      filter: blur(8px);
       pointer-events: none;
+    }
+
+    body.left-toolbar-collapsed .left-panel-expand-btn {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(-50%) translateX(0) scale(1);
+      filter: blur(0px);
     }
 
     body.left-toolbar-collapsed .left-toolbar-toggle .btn-icon {
@@ -737,7 +1013,7 @@
       right: 14px;
       width: min(620px, calc(100vw - 28px));
       height: calc(100vh - 88px);
-      background: rgba(255,255,255,0.98);
+      background: rgba(255,255,255,0.08);
       border: 1px solid rgba(15,23,42,0.10);
       border-radius: 20px;
       box-shadow: var(--shadow);
@@ -745,20 +1021,37 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px) saturate(1.08);
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transform: translateX(24px);
-      transition: transform 320ms ease, opacity 240ms ease, visibility 0s linear 320ms;
+      transform: translateX(28px) scale(0.985);
+      will-change: transform, opacity, width, height, filter;
+      filter: blur(8px);
+      transition:
+        transform 620ms cubic-bezier(.22,1,.36,1),
+        opacity 460ms ease,
+        width 620ms cubic-bezier(.22,1,.36,1),
+        height 620ms cubic-bezier(.22,1,.36,1),
+        border-radius 420ms ease,
+        filter 420ms ease,
+        box-shadow 420ms ease,
+        visibility 0s linear 620ms;
     }
 
     .formulas-panel.open {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transform: translateX(0);
-      transition: transform 320ms ease, opacity 240ms ease;
+      transform: translateX(0) scale(1);
+      filter: blur(0px);
+      transition:
+        transform 620ms cubic-bezier(.22,1,.36,1),
+        opacity 460ms ease,
+        width 620ms cubic-bezier(.22,1,.36,1),
+        height 620ms cubic-bezier(.22,1,.36,1),
+        border-radius 420ms ease,
+        filter 420ms ease;
     }
 
     .formulas-header-actions {
@@ -774,7 +1067,7 @@
       gap: 10px;
       padding: 14px 14px 10px;
       border-bottom: 1px solid rgba(15,23,42,0.08);
-      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.94));
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
     }
 
     .formulas-title h3 {
@@ -793,6 +1086,8 @@
       height: 72px;
       min-height: 72px;
       overflow: hidden;
+      border-radius: 22px;
+      box-shadow: 0 14px 32px rgba(15,23,42,0.10);
     }
 
     .formulas-panel.is-collapsed .formulas-title,
@@ -802,6 +1097,18 @@
     .formulas-panel.is-collapsed .info-builder-body {
       opacity: 0;
       pointer-events: none;
+      transform: scale(0.94) translateX(10px);
+      filter: blur(6px);
+    }
+
+    .formulas-title,
+    .formulas-controls,
+    .formulas-list,
+    .graph-builder-body,
+    .info-builder-body {
+      transition: opacity 420ms ease, transform 520ms cubic-bezier(.22,1,.36,1), filter 360ms ease;
+      transform: scale(1) translateX(0);
+      filter: blur(0px);
     }
 
     .formulas-panel.is-collapsed .formulas-header {
@@ -829,7 +1136,7 @@
       gap: 8px;
       padding: 12px 14px;
       border-bottom: 1px solid rgba(15,23,42,0.08);
-      background: rgba(15,23,42,0.02);
+      background: rgba(15,23,42,0.035);
     }
 
     .formulas-controls select,
@@ -839,7 +1146,7 @@
       padding: 9px 12px;
       border-radius: 12px;
       border: 1px solid rgba(15,23,42,0.10);
-      background: #fff;
+      background: rgba(255,255,255,0.18);
       color: var(--text);
     }
 
@@ -862,7 +1169,7 @@
     .formula-card {
       border: 1px solid rgba(15,23,42,0.08);
       border-radius: 16px;
-      background: rgba(15,23,42,0.025);
+      background: rgba(255,255,255,0.08);
       padding: 12px 12px 10px;
       cursor: pointer;
       transition: 0.18s ease;
@@ -904,7 +1211,7 @@
     .formula-table-wrap {
       border: 1px solid rgba(15,23,42,0.08);
       border-radius: 16px;
-      background: rgba(255,255,255,0.98);
+      background: rgba(255,255,255,0.08);
       overflow: auto;
       flex: 1;
       min-height: 0;
@@ -938,7 +1245,7 @@
       font-size: 12px;
       color: var(--muted);
       border-bottom: 1px solid rgba(15,23,42,0.08);
-      background: rgba(15,23,42,0.03);
+      background: rgba(15,23,42,0.035);
     }
 
     .formula-table {
@@ -959,7 +1266,7 @@
       font-size: 14px;
       font-weight: 700;
       color: var(--text);
-      background: rgba(15,23,42,0.04);
+      background: rgba(255,255,255,0.10);
     }
 
     .formula-table tbody tr {
@@ -989,7 +1296,7 @@
       border: 1px dashed rgba(15,23,42,0.12);
       color: var(--muted);
       text-align: center;
-      background: rgba(15,23,42,0.02);
+      background: rgba(15,23,42,0.035);
     }
 
 
@@ -1029,7 +1336,7 @@
       padding: 9px 12px;
       border-radius: 12px;
       border: 1px solid rgba(15,23,42,0.10);
-      background: #fff;
+      background: rgba(255,255,255,0.18);
       color: var(--text);
       font: inherit;
     }
@@ -1050,7 +1357,7 @@
       border: 1px solid rgba(15,23,42,0.08);
       border-radius: 16px;
       padding: 12px;
-      background: rgba(15,23,42,0.025);
+      background: rgba(255,255,255,0.08);
       display: grid;
       grid-template-columns: 1fr 130px 48px;
       gap: 10px;
@@ -1084,14 +1391,14 @@
       font-size: 12px;
       line-height: 1.5;
       color: var(--muted);
-      background: rgba(15,23,42,0.03);
+      background: rgba(15,23,42,0.035);
       border: 1px solid rgba(15,23,42,0.08);
       border-radius: 14px;
       padding: 10px 12px;
     }
 
     .graph-builder-help code {
-      background: rgba(15,23,42,0.06);
+      background: rgba(255,255,255,0.12);
       padding: 2px 6px;
       border-radius: 8px;
     }
@@ -1145,7 +1452,7 @@
       padding: 9px 12px;
       border-radius: 12px;
       border: 1px solid rgba(15,23,42,0.10);
-      background: #fff;
+      background: rgba(255,255,255,0.18);
       color: var(--text);
       font: inherit;
     }
@@ -1165,7 +1472,7 @@
     .info-result-card {
       border: 1px solid rgba(15,23,42,0.08);
       border-radius: 16px;
-      background: rgba(15,23,42,0.025);
+      background: rgba(255,255,255,0.08);
       padding: 12px;
       overflow: auto;
     }
@@ -1182,7 +1489,7 @@
       border-collapse: collapse;
       table-layout: fixed;
       font-size: 14px;
-      background: #fff;
+      background: rgba(255,255,255,0.18);
     }
 
     .truth-table th,
@@ -1193,7 +1500,7 @@
     }
 
     .truth-table th {
-      background: rgba(15,23,42,0.05);
+      background: rgba(255,255,255,0.12);
       font-weight: 700;
     }
 
@@ -1249,7 +1556,7 @@
       border-radius: 18px;
       overflow: hidden;
       border: 1px solid rgba(148,163,184,0.18);
-      background: #f8fafc;
+      background: rgba(255,255,255,0.10);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
     }
 
@@ -1278,7 +1585,7 @@
       padding: 4px 8px;
       border-radius: 999px;
       border: 1px solid rgba(148,163,184,0.16);
-      background: rgba(255,255,255,0.94);
+      background: rgba(255,255,255,0.08);
       text-transform: uppercase;
       font-size: 11px;
     }
@@ -1288,7 +1595,7 @@
       padding: 16px 18px;
       min-height: 180px;
       overflow: auto;
-      background: #f8fafc !important;
+      background: rgba(255,255,255,0.10) !important;
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
       font-size: 14px;
       line-height: 1.55;
@@ -1392,7 +1699,7 @@
       font-size: 12px;
       line-height: 1.5;
       color: var(--muted);
-      background: rgba(15,23,42,0.03);
+      background: rgba(15,23,42,0.035);
       border: 1px solid rgba(15,23,42,0.08);
       border-radius: 14px;
       padding: 10px 12px;
@@ -1440,6 +1747,68 @@
         display: none;
       }
     }
+  
+
+    /* ultra transparent overrides */
+    .topbar,
+    .panel,
+    .shape-menu,
+    .left-shape-menu,
+    .formulas-panel,
+    .status,
+    .hint,
+    .toolbar-toggle-btn,
+    .right-panel-expand-btn,
+    .left-panel-expand-btn {
+      background-color: rgba(255,255,255,0.06) !important;
+      backdrop-filter: blur(8px) saturate(1.04) !important;
+      -webkit-backdrop-filter: blur(8px) saturate(1.04) !important;
+      box-shadow: 0 10px 28px rgba(15,23,42,0.06) !important;
+    }
+
+    .topbar {
+      background-image: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.015)) !important;
+    }
+
+    .panel {
+      background-image: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.012)) !important;
+    }
+
+    .shape-item,
+    .formula-card,
+    .formula-table-wrap,
+    .info-result-card,
+    .graph-series-card,
+    .graph-builder-help,
+    .code-helper-text,
+    .formula-empty,
+    .truth-table,
+    .code-preview-shell,
+    .code-preview-header,
+    .formulas-header,
+    .formulas-controls,
+    .formula-table-meta {
+      background: rgba(255,255,255,0.10) !important;
+      backdrop-filter: blur(6px) saturate(1.03);
+      -webkit-backdrop-filter: blur(6px) saturate(1.03);
+    }
+
+    button {
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
+      backdrop-filter: blur(6px) saturate(1.04);
+      -webkit-backdrop-filter: blur(6px) saturate(1.04);
+    }
+
+    button:hover {
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.07));
+    }
+
+    .floating-input {
+      background: rgba(255,255,255,0.18) !important;
+      backdrop-filter: blur(8px) saturate(1.03);
+      -webkit-backdrop-filter: blur(8px) saturate(1.03);
+    }
+
   </style>
 
   <script>
@@ -1456,6 +1825,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjs@12.4.2/lib/browser/math.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/highlight.min.js"></script>
 
@@ -1475,6 +1845,39 @@
           <button id="textTool" class="tool-icon-btn glass-blue" title="Текст (Alt+T)" aria-label="Текст"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M5 6h14"></path><path d="M12 6v12"></path><path d="M8 18h8"></path></svg></span></button>
           <button id="linkTool" class="tool-icon-btn glass-green" title="Ссылка (K)" aria-label="Ссылка"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"></path><path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"></path></svg></span></button>
           <button id="noteTool" class="tool-icon-btn glass-amber" title="Заметка (N)" aria-label="Заметка"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M7 4h7l5 5v11H7z"></path><path d="M14 4v5h5"></path><path d="M10 13h4"></path><path d="M10 17h4"></path></svg></span></button>
+          <div class="left-add-wrap">
+            <button id="leftAddMenuBtn" class="left-add-btn glass-violet" title="Добавить фигуру" aria-label="Добавить фигуру">
+              <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></span>
+              <span class="btn-label">Фигуры</span>
+            </button>
+            <div class="left-shape-menu" id="leftShapeMenu">
+              <div class="shape-section-title">2D фигуры</div>
+              <div class="shape-grid">
+                <div class="shape-item compact" title="Прямоугольник" draggable="true" data-shape-kind="rect" data-shape-group="shape2d"><span class="shape-glyph">▭</span><span>Прямоугольник</span></div>
+                <div class="shape-item compact" title="Квадрат" draggable="true" data-shape-kind="square" data-shape-group="shape2d"><span class="shape-glyph">□</span><span>Квадрат</span></div>
+                <div class="shape-item compact" title="Параллелограмм" draggable="true" data-shape-kind="parallelogram" data-shape-group="shape2d"><span class="shape-glyph">▱</span><span>Параллелограмм</span></div>
+                <div class="shape-item compact" title="Трапеция" draggable="true" data-shape-kind="trapezoid" data-shape-group="shape2d"><span class="shape-glyph">⏢</span><span>Трапеция</span></div>
+                <div class="shape-item compact" title="Эллипс" draggable="true" data-shape-kind="ellipse" data-shape-group="shape2d"><span class="shape-glyph">◯</span><span>Эллипс</span></div>
+                <div class="shape-item compact" title="Треугольник" draggable="true" data-shape-kind="triangle-acute" data-shape-group="shape2d"><span class="shape-glyph">△</span><span>Треугольник</span></div>
+                <div class="shape-item compact" title="Прямоугольный треугольник" draggable="true" data-shape-kind="triangle-right" data-shape-group="shape2d"><span class="shape-glyph">◺</span><span>Прямоугольный</span></div>
+                <div class="shape-item compact" title="Тупоугольный треугольник" draggable="true" data-shape-kind="triangle-obtuse" data-shape-group="shape2d"><span class="shape-glyph">△</span><span>Тупоугольный</span></div>
+                <div class="shape-item compact" title="Ромб" draggable="true" data-shape-kind="diamond" data-shape-group="shape2d"><span class="shape-glyph">◇</span><span>Ромб</span></div>
+                <div class="shape-item compact" title="Пятиугольник" draggable="true" data-shape-kind="pentagon" data-shape-group="shape2d"><span class="shape-glyph">⬠</span><span>Пятиугольник</span></div>
+                <div class="shape-item compact" title="Шестиугольник" draggable="true" data-shape-kind="hexagon" data-shape-group="shape2d"><span class="shape-glyph">⬡</span><span>Шестиугольник</span></div>
+                <div class="shape-item compact" title="Звезда" draggable="true" data-shape-kind="star" data-shape-group="shape2d"><span class="shape-glyph">★</span><span>Звезда</span></div>
+                <div class="shape-item compact" title="Линия" draggable="true" data-shape-kind="line" data-shape-group="shape2d"><span class="shape-glyph">／</span><span>Линия</span></div>
+                <div class="shape-item compact" title="Стрелка" draggable="true" data-shape-kind="arrow" data-shape-group="shape2d"><span class="shape-glyph">➜</span><span>Стрелка</span></div>
+              </div>
+              <div class="shape-section-title">3D фигуры</div>
+              <div class="shape-grid">
+                <div class="shape-item compact" title="Куб" draggable="true" data-shape-kind="cube" data-shape-group="shape3d"><span class="shape-glyph">⬚</span><span>Куб</span></div>
+                <div class="shape-item compact" title="Сфера" draggable="true" data-shape-kind="sphere" data-shape-group="shape3d"><span class="shape-glyph">⚪</span><span>Сфера</span></div>
+                <div class="shape-item compact" title="Цилиндр" draggable="true" data-shape-kind="cylinder" data-shape-group="shape3d"><span class="shape-glyph">⏢</span><span>Цилиндр</span></div>
+                <div class="shape-item compact" title="Конус" draggable="true" data-shape-kind="cone" data-shape-group="shape3d"><span class="shape-glyph">🔺</span><span>Конус</span></div>
+                <div class="shape-item compact" title="Пирамида" draggable="true" data-shape-kind="pyramid" data-shape-group="shape3d"><span class="shape-glyph">△</span><span>Пирамида</span></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </aside>
@@ -1525,20 +1928,7 @@
               <div class="shape-item compact" title="Конус" draggable="true" data-shape-kind="cone" data-shape-group="shape3d"><span class="shape-glyph">🔺</span></div>
               <div class="shape-item compact" title="Пирамида" draggable="true" data-shape-kind="pyramid" data-shape-group="shape3d"><span class="shape-glyph">△</span></div>
             </div>
-            <div class="shape-section-title">Базовые графики</div>
-            <div class="shape-grid">
-              <div class="shape-item compact" title="Линейная функция" draggable="true" data-shape-kind="linear" data-shape-group="graph"><span class="shape-glyph">／</span></div>
-              <div class="shape-item compact" title="Парабола" draggable="true" data-shape-kind="parabola" data-shape-group="graph"><span class="shape-glyph">∪</span></div>
-              <div class="shape-item compact" title="Гипербола" draggable="true" data-shape-kind="hyperbola" data-shape-group="graph"><span class="shape-glyph">⌇</span></div>
-              <div class="shape-item compact" title="Модуль" draggable="true" data-shape-kind="abs" data-shape-group="graph"><span class="shape-glyph">∨</span></div>
-              <div class="shape-item compact" title="Кубическая функция" draggable="true" data-shape-kind="cubic" data-shape-group="graph"><span class="shape-glyph">∿</span></div>
-              <div class="shape-item compact" title="Корень" draggable="true" data-shape-kind="sqrt" data-shape-group="graph"><span class="shape-glyph">√</span></div>
-              <div class="shape-item compact" title="Показательная функция" draggable="true" data-shape-kind="exp" data-shape-group="graph"><span class="shape-glyph">eˣ</span></div>
-              <div class="shape-item compact" title="Логарифм" draggable="true" data-shape-kind="log" data-shape-group="graph"><span class="shape-glyph">log</span></div>
-              <div class="shape-item compact" title="Синус" draggable="true" data-shape-kind="sin" data-shape-group="graph"><span class="shape-glyph">∿</span></div>
-              <div class="shape-item compact" title="Косинус" draggable="true" data-shape-kind="cos" data-shape-group="graph"><span class="shape-glyph">≈</span></div>
             </div>
-          </div>
         </div>
 
         <div class="panel subject-panel">
@@ -1585,6 +1975,7 @@
           <button id="undoBtn" class="icon-btn glass-blue" title="Undo (Ctrl+Z)" aria-label="Отменить"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"></path><path d="M20 20a8 8 0 0 0-8-8H4"></path></svg></span></button>
           <button id="redoBtn" class="icon-btn glass-green" title="Redo (Ctrl+Shift+Z)" aria-label="Повторить"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"></path><path d="M4 20a8 8 0 0 1 8-8h8"></path></svg></span></button>
           <button id="savePngBtn" class="glass-blue" title="Сохранить PNG"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 4v10"></path><path d="m8 10 4 4 4-4"></path><path d="M5 20h14"></path></svg></span><span class="btn-label">Сохранить PNG</span></button>
+          <button id="savePdfBtn" class="glass-violet" title="Сохранить PDF"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 3v12"></path><path d="m8 11 4 4 4-4"></path><path d="M5 21h14"></path><path d="M7 3h10"></path></svg></span><span class="btn-label">Сохранить PDF</span></button>
           <button id="uploadImageBtn" class="glass-green" title="Загрузить картинку"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M12 20V10"></path><path d="m8 14 4-4 4 4"></path><rect x="4" y="4" width="16" height="16" rx="3"></rect></svg></span><span class="btn-label">Загрузить картинку</span></button>
           <button id="clearBtn" class="glass-rose" title="Очистить холст"><span class="btn-icon"><svg viewBox="0 0 24 24"><path d="M6 7h12"></path><path d="M9 7V5h6v2"></path><path d="M8 7l1 12h6l1-12"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg></span><span class="btn-label">Очистить</span></button>
           <input id="imageFileInput" type="file" accept="image/*" hidden />
@@ -1595,6 +1986,16 @@
     <button id="floatingToggleToolbarBtn" class="toolbar-toggle-btn glass-violet" title="Развернуть верхнюю панель">
       <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"></path></svg></span>
       <span class="btn-label">Развернуть меню</span>
+    </button>
+
+    <button id="leftExpandToolbarBtn" class="left-panel-expand-btn glass-blue" title="Развернуть панель инструментов">
+      <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"></path></svg></span>
+      <span class="btn-label">Инструменты</span>
+    </button>
+
+    <button id="rightExpandPanelBtn" class="right-panel-expand-btn glass-blue" title="Развернуть правую панель">
+      <span class="btn-label">Развернуть справа</span>
+      <span class="btn-icon"><svg viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"></path></svg></span>
     </button>
 
     <aside id="formulasPanel" class="formulas-panel" aria-label="Формулы">
@@ -1806,9 +2207,62 @@
 
     <div class="board-wrap" id="boardWrap" tabindex="0">
       <canvas id="board"></canvas>
-      <div class="hint">
-        Space — pan. Ctrl+колёсико — размер кисти. Ctrl+ЛКМ — выделение/перемещение. Добавить ▾ — перетащи фигуру на холст. Подписи вершин можно включить сверху. Панель можно свернуть. Двойной клик по ссылке открывает её. Всё сохраняется между сеансами автоматически.
-      </div>
+      <button id="helpFab" class="help-fab" type="button" title="Открыть справку" aria-label="Открыть справку">?</button>
+      <aside id="helpPanel" class="help-panel" aria-label="Справка по горячим клавишам и возможностям">
+        <div class="help-panel-header">
+          <div class="help-panel-title">
+            <h3>Справка по доске</h3>
+            <p>Горячие клавиши, управление мышью и быстрые действия для математики и информатики.</p>
+          </div>
+          <button id="closeHelpBtn" class="help-close-btn" type="button" title="Закрыть справку" aria-label="Закрыть справку">×</button>
+        </div>
+
+        <div class="help-section">
+          <h4>Навигация и редактирование</h4>
+          <div class="help-list">
+            <div class="help-item"><div class="help-kbd">Space</div><div>Панорамирование холста мышью.</div></div>
+            <div class="help-item"><div class="help-kbd">Ctrl + колёсико</div><div>Быстро изменить размер кисти.</div></div>
+            <div class="help-item"><div class="help-kbd">Ctrl + ЛКМ</div><div>Выделение или перемещение объектов на доске.</div></div>
+            <div class="help-item"><div class="help-kbd">Double click</div><div>Открыть ссылку, если на холсте размещён объект-ссылка.</div></div>
+            <div class="help-item"><div class="help-kbd">Esc</div><div>Закрыть это окно справки и некоторые открытые панели.</div></div>
+          </div>
+        </div>
+
+        <div class="help-section">
+          <h4>Инструменты</h4>
+          <div class="help-list">
+            <div class="help-item"><div class="help-kbd">V</div><div>Выделение объектов.</div></div>
+            <div class="help-item"><div class="help-kbd">B</div><div>Кисть для свободного рисования.</div></div>
+            <div class="help-item"><div class="help-kbd">E</div><div>Ластик мазков.</div></div>
+            <div class="help-item"><div class="help-kbd">O</div><div>Ластик объектов.</div></div>
+            <div class="help-item"><div class="help-kbd">Alt + T</div><div>Текстовый блок на холсте.</div></div>
+            <div class="help-item"><div class="help-kbd">K</div><div>Вставка ссылки.</div></div>
+            <div class="help-item"><div class="help-kbd">N</div><div>Быстрая заметка.</div></div>
+          </div>
+        </div>
+
+        <div class="help-section">
+          <h4>Математика</h4>
+          <div class="help-list">
+            <div class="help-item"><div class="help-kbd">Формулы</div><div>Открыть шпаргалку с формулами и вставлять их на доску.</div></div>
+            <div class="help-item"><div class="help-kbd">Графики</div><div>Строить функции и наборы точек, настраивать оси и сетку.</div></div>
+            <div class="help-item"><div class="help-kbd">Фигуры</div><div>Перетаскивать геометрические фигуры на холст для схем и задач.</div></div>
+            <div class="help-item"><div class="help-kbd">Подписи вершин</div><div>Включать подписи вершин для геометрических объектов сверху в панели.</div></div>
+          </div>
+        </div>
+
+        <div class="help-section">
+          <h4>Информатика</h4>
+          <div class="help-list">
+            <div class="help-item"><div class="help-kbd">Код</div><div>Вставлять отформатированные блоки кода на доску.</div></div>
+            <div class="help-item"><div class="help-kbd">Системы счисления</div><div>Переводить числа между системами счисления.</div></div>
+            <div class="help-item"><div class="help-kbd">Биты / байты</div><div>Считать единицы информации и быстро вставлять результат.</div></div>
+            <div class="help-item"><div class="help-kbd">Логика</div><div>Строить таблицы истинности по логическим выражениям.</div></div>
+          </div>
+        </div>
+
+        <div class="help-note">Все изменения на доске сохраняются автоматически между сеансами.</div>
+      </aside>
       <div class="status" id="status"></div>
     </div>
   </div>
@@ -1819,6 +2273,9 @@
       const ctx = canvas.getContext('2d');
       const boardWrap = document.getElementById('boardWrap');
       const statusEl = document.getElementById('status');
+      const helpFab = document.getElementById('helpFab');
+      const helpPanel = document.getElementById('helpPanel');
+      const closeHelpBtn = document.getElementById('closeHelpBtn');
 
       const swatchesEl = document.getElementById('swatches');
       const colorPicker = document.getElementById('colorPicker');
@@ -1839,6 +2296,7 @@
       const redoBtn = document.getElementById('redoBtn');
       const clearBtn = document.getElementById('clearBtn');
       const savePngBtn = document.getElementById('savePngBtn');
+      const savePdfBtn = document.getElementById('savePdfBtn');
       const uploadImageBtn = document.getElementById('uploadImageBtn');
       const imageFileInput = document.getElementById('imageFileInput');
       const addMenuBtn = document.getElementById('addMenuBtn');
@@ -1862,11 +2320,15 @@
       const collapseFormulasBtn = document.getElementById('collapseFormulasBtn');
       const leftToolbar = document.getElementById('leftToolbar');
       const toggleLeftToolbarBtn = document.getElementById('toggleLeftToolbarBtn');
+      const leftExpandToolbarBtn = document.getElementById('leftExpandToolbarBtn');
+      const rightExpandPanelBtn = document.getElementById('rightExpandPanelBtn');
       const formulaCategorySelect = document.getElementById('formulaCategorySelect');
       const formulaTopicSelect = document.getElementById('formulaTopicSelect');
       const formulaSearchInput = document.getElementById('formulaSearchInput');
       const formulasList = document.getElementById('formulasList');
       const shapeMenu = document.getElementById('shapeMenu');
+      const leftAddMenuBtn = document.getElementById('leftAddMenuBtn');
+      const leftShapeMenu = document.getElementById('leftShapeMenu');
       const shapeItems = Array.from(document.querySelectorAll('.shape-item[data-shape-kind]'));
       const autoLabelVerticesCheckbox = document.getElementById('autoLabelVertices');
       const toggleToolbarBtn = document.getElementById('toggleToolbarBtn');
@@ -3055,16 +3517,29 @@
         if (toggleLeftToolbarBtn) {
           toggleLeftToolbarBtn.title = state.leftToolbarCollapsed ? 'Развернуть панель инструментов' : 'Свернуть панель инструментов';
         }
+        if (leftExpandToolbarBtn) {
+          leftExpandToolbarBtn.title = state.leftToolbarCollapsed ? 'Развернуть панель инструментов' : 'Панель инструментов открыта';
+          leftExpandToolbarBtn.setAttribute('aria-hidden', state.leftToolbarCollapsed ? 'false' : 'true');
+        }
       }
 
       function applyFormulasPanelCollapsedUi() {
         if (!formulasPanel) return;
+        const isOpen = formulasPanel.classList.contains('open');
         formulasPanel.classList.toggle('is-collapsed', !!state.formulasPanelCollapsed);
         if (collapseFormulasBtn) {
           collapseFormulasBtn.title = state.formulasPanelCollapsed ? 'Развернуть формулы' : 'Свернуть формулы';
           collapseFormulasBtn.setAttribute('aria-label', state.formulasPanelCollapsed ? 'Развернуть формулы' : 'Свернуть формулы');
         }
+        if (rightExpandPanelBtn) {
+          const show = !!state.formulasPanelCollapsed && isOpen;
+          rightExpandPanelBtn.classList.toggle('is-visible', show);
+          rightExpandPanelBtn.setAttribute('aria-hidden', show ? 'false' : 'true');
+        }
       }
+
+      const formulasPanelStateObserver = new MutationObserver(() => applyFormulasPanelCollapsedUi());
+      if (formulasPanel) formulasPanelStateObserver.observe(formulasPanel, { attributes: true, attributeFilter: ['class'] });
 
       function loadPersistedBoardState() {
         try {
@@ -3122,19 +3597,55 @@
         redoBtn.style.opacity = state.future.length ? '1' : '0.55';
       }
 
+      function buildCursorSvg(markup, hotX = 12, hotY = 12, canvasSize = 32) {
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasSize}" height="${canvasSize}" viewBox="0 0 ${canvasSize} ${canvasSize}">${markup}</svg>`;
+        return `url("data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}") ${hotX} ${hotY}, auto`;
+      }
+
+      function buildBrushCursor(size) {
+        const brushSize = Math.max(1, Number(size) || 1);
+        const diameter = Math.max(6, Math.min(80, brushSize));
+        const stroke = diameter >= 24 ? 2 : 1.5;
+        const padding = Math.max(8, stroke * 4);
+        const canvasSize = Math.ceil(diameter + padding * 2);
+        const center = canvasSize / 2;
+        const radius = Math.max(2, diameter / 2 - stroke / 2);
+        const markup = `<circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="#2563eb" stroke-width="${stroke}" vector-effect="non-scaling-stroke"/>`;
+        return buildCursorSvg(markup, center, center, canvasSize);
+      }
+
+      const CURSORS = {
+        default: buildCursorSvg('<circle cx="16" cy="16" r="8" fill="rgba(124,58,237,0.18)" stroke="#7c3aed" stroke-width="2"/><circle cx="16" cy="16" r="2.5" fill="#7c3aed"/>'),
+        eraser: buildCursorSvg('<rect x="8" y="9" width="16" height="12" rx="4" fill="rgba(239,68,68,0.15)" stroke="#ef4444" stroke-width="2" transform="rotate(-18 16 16)"/><path d="M11 19h10" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>'),
+        objectEraser: buildCursorSvg('<circle cx="16" cy="16" r="9" fill="rgba(239,68,68,0.14)" stroke="#ef4444" stroke-width="2"/><path d="M11 11l10 10M21 11 11 21" stroke="#ef4444" stroke-width="2.4" stroke-linecap="round"/>'),
+        text: buildCursorSvg('<rect x="7" y="6" width="18" height="20" rx="9" fill="rgba(15,23,42,0.06)" stroke="#0f172a" stroke-width="1.8"/><path d="M12 10h8M16 10v12M13 22h6" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>'),
+        link: buildCursorSvg('<circle cx="16" cy="16" r="9" fill="rgba(14,165,233,0.12)" stroke="#0ea5e9" stroke-width="2"/><path d="M12.5 18.5l-2-2a3 3 0 0 1 0-4.2l2-2a3 3 0 0 1 4.2 0" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M19.5 13.5l2 2a3 3 0 0 1 0 4.2l-2 2a3 3 0 0 1-4.2 0" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" fill="none"/>'),
+        note: buildCursorSvg('<rect x="8" y="7" width="16" height="18" rx="4" fill="rgba(250,204,21,0.18)" stroke="#ca8a04" stroke-width="2"/><path d="M12 13h8M12 17h8M12 21h5" stroke="#ca8a04" stroke-width="2" stroke-linecap="round"/>'),
+        grab: 'grab',
+        resize: 'nwse-resize'
+      };
+
+      function updateBoardCursor() {
+        if (!boardWrap) return;
+        const cursor = getCursorForTool(state.tool);
+        boardWrap.style.cursor = cursor || 'auto';
+      }
+
       function getCursorForTool(tool) {
-        if (state.spacePanMode) return 'grab';
-        if (tool === 'brush') return 'crosshair';
-        if (tool === 'eraser') return 'cell';
-        if (tool === 'text' || tool === 'note' || tool === 'link') return 'text';
-        if (tool === 'objectEraser') return 'not-allowed';
-        return 'default';
+        if (state.spacePanMode) return CURSORS.grab;
+        if (tool === 'brush') return buildBrushCursor(state.brushSize);
+        if (tool === 'eraser') return CURSORS.eraser;
+        if (tool === 'text') return CURSORS.text;
+        if (tool === 'note') return CURSORS.note;
+        if (tool === 'link') return CURSORS.link;
+        if (tool === 'objectEraser') return CURSORS.objectEraser;
+        return CURSORS.default;
       }
 
       function setTool(tool) {
         state.tool = tool;
         Object.entries(toolButtons).forEach(([key, btn]) => btn.classList.toggle('active', key === tool));
-        boardWrap.style.cursor = getCursorForTool(tool);
+        updateBoardCursor();
         render();
       }
 
@@ -4546,7 +5057,7 @@
         return { x: minX, y: minY, width: Math.max(1, maxX - minX), height: Math.max(1, maxY - minY) };
       }
 
-      function exportBoardToPng() {
+      function buildBoardExportCanvas() {
         const bounds = getAllObjectsBounds() || { x: -boardWrap.clientWidth / (2 * state.zoom), y: -boardWrap.clientHeight / (2 * state.zoom), width: boardWrap.clientWidth / state.zoom, height: boardWrap.clientHeight / state.zoom };
         const padding = 40;
         const exportCanvas = document.createElement('canvas');
@@ -4557,10 +5068,36 @@
         exportCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
         exportCtx.translate(padding - bounds.x, padding - bounds.y);
         for (const obj of state.objects) drawObject(obj, exportCtx);
+        return exportCanvas;
+      }
+
+      function exportBoardToPng() {
+        const exportCanvas = buildBoardExportCanvas();
         const link = document.createElement('a');
         link.href = exportCanvas.toDataURL('image/png');
         link.download = `lesson-board-${new Date().toISOString().slice(0,19).replace(/[T:]/g, '-')}.png`;
         link.click();
+      }
+
+      function exportBoardToPdf() {
+        const jspdfNs = window.jspdf;
+        if (!jspdfNs || typeof jspdfNs.jsPDF !== 'function') {
+          alert('PDF-библиотека ещё загружается. Попробуйте ещё раз через секунду.');
+          return;
+        }
+
+        const exportCanvas = buildBoardExportCanvas();
+        const { jsPDF } = jspdfNs;
+        const orientation = exportCanvas.width >= exportCanvas.height ? 'landscape' : 'portrait';
+        const pdf = new jsPDF({
+          orientation,
+          unit: 'px',
+          format: [exportCanvas.width, exportCanvas.height],
+          compress: true,
+        });
+        const imageData = exportCanvas.toDataURL('image/png');
+        pdf.addImage(imageData, 'PNG', 0, 0, exportCanvas.width, exportCanvas.height, undefined, 'FAST');
+        pdf.save(`lesson-board-${new Date().toISOString().slice(0,19).replace(/[T:]/g, '-')}.pdf`);
       }
 
 
@@ -4576,6 +5113,7 @@
 
       function closeShapeMenu() {
         shapeMenu.classList.remove('open');
+        if (leftShapeMenu) leftShapeMenu.classList.remove('open');
         if (triangleSubmenu) triangleSubmenu.classList.remove('open');
       }
       function eraseObjectAt(worldX, worldY) {
@@ -6206,9 +6744,9 @@
         if (state.isDraggingObject) { updateDragObject(world); return; }
 
         if (state.selectedIds.length && hitTestResizeHandle(world.x, world.y)) {
-          boardWrap.style.cursor = 'nwse-resize';
+          boardWrap.style.cursor = CURSORS.resize;
         } else {
-          boardWrap.style.cursor = getCursorForTool(state.tool);
+          updateBoardCursor();
         }
       });
 
@@ -6227,7 +6765,7 @@
         state.spacePanMode = false; deactivateTemporaryCtrlDrag(); state.isObjectErasing = false;
         if (state.isPanning) endPan(); if (state.isDraggingObject) endDragObject(); if (state.isResizingSelection) endResizeSelection();
         if (state.isMarqueeSelecting) { state.isMarqueeSelecting = false; state.marqueeStart = null; state.marqueeCurrent = null; }
-        boardWrap.style.cursor = getCursorForTool(state.tool);
+        updateBoardCursor();
       });
 
       canvas.addEventListener('wheel', event => {
@@ -6235,7 +6773,7 @@
         if (event.ctrlKey) {
           const delta = event.deltaY < 0 ? 1 : -1;
           state.brushSize = Math.max(1, Math.min(80, state.brushSize + delta));
-          sizeRange.value = String(state.brushSize); sizeValue.textContent = `${state.brushSize} px`; render(); return;
+          sizeRange.value = String(state.brushSize); sizeValue.textContent = `${state.brushSize} px`; updateBoardCursor(); render(); return;
         }
         zoomAt(event.clientX, event.clientY, event.deltaY);
       }, { passive: false });
@@ -6306,7 +6844,7 @@
       }, true);
 
       window.addEventListener('keyup', event => {
-        if (event.code === 'Space') { state.spacePanMode = false; boardWrap.style.cursor = getCursorForTool(state.tool); }
+        if (event.code === 'Space') { state.spacePanMode = false; updateBoardCursor(); }
         if (!event.ctrlKey && !event.metaKey && state.ctrlDragMode) deactivateTemporaryCtrlDrag();
       });
 
@@ -6320,6 +6858,17 @@
         if (!shapeMenu.classList.contains('open') && triangleSubmenu) triangleSubmenu.classList.remove('open');
       });
 
+      if (leftAddMenuBtn && leftShapeMenu) {
+        leftAddMenuBtn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const willOpen = !leftShapeMenu.classList.contains('open');
+          leftShapeMenu.classList.remove('open');
+          if (willOpen) leftShapeMenu.classList.add('open');
+          shapeMenu.classList.remove('open');
+          if (triangleSubmenu) triangleSubmenu.classList.remove('open');
+        });
+      }
+
       if (triangleMenuBtn) {
         triangleMenuBtn.addEventListener('click', (event) => {
           event.stopPropagation();
@@ -6328,7 +6877,7 @@
       }
 
       document.addEventListener('click', (event) => {
-        if (!event.target.closest('.menu-wrap')) closeShapeMenu();
+        if (!event.target.closest('.menu-wrap') && !event.target.closest('.left-add-wrap') && !event.target.closest('.left-shape-menu')) closeShapeMenu();
       });
 
       shapeItems.forEach(item => {
@@ -6374,6 +6923,27 @@
       toolButtons.note.addEventListener('click', () => setTool('note'));
       undoBtn.addEventListener('click', undo); redoBtn.addEventListener('click', redo); clearBtn.addEventListener('click', clearBoard);
       savePngBtn.addEventListener('click', exportBoardToPng);
+      savePdfBtn?.addEventListener('click', exportBoardToPdf);
+      function toggleHelpPanel(force) {
+        if (!helpPanel) return;
+        const next = typeof force === 'boolean' ? force : !helpPanel.classList.contains('open');
+        helpPanel.classList.toggle('open', next);
+        helpFab?.classList.toggle('active', next);
+        helpFab?.setAttribute('aria-expanded', next ? 'true' : 'false');
+      }
+
+
+      helpFab?.addEventListener('click', (event) => {
+        event.stopPropagation();
+        toggleHelpPanel();
+      });
+      closeHelpBtn?.addEventListener('click', () => toggleHelpPanel(false));
+      helpPanel?.addEventListener('click', (event) => event.stopPropagation());
+      document.addEventListener('click', () => toggleHelpPanel(false));
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') toggleHelpPanel(false);
+      });
+
       function toggleToolbar() {
         state.toolbarCollapsed = !state.toolbarCollapsed;
         applyToolbarCollapsedUi();
@@ -6390,6 +6960,12 @@
 
       toggleToolbarBtn.addEventListener('click', toggleToolbar);
       if (floatingToggleToolbarBtn) floatingToggleToolbarBtn.addEventListener('click', toggleToolbar);
+      if (leftExpandToolbarBtn) leftExpandToolbarBtn.addEventListener('click', () => {
+        if (state.leftToolbarCollapsed) toggleLeftToolbar();
+      });
+      if (rightExpandPanelBtn) rightExpandPanelBtn.addEventListener('click', () => {
+        if (state.formulasPanelCollapsed) toggleFormulasPanelCollapsed();
+      });
       if (toggleLeftToolbarBtn) toggleLeftToolbarBtn.addEventListener('click', toggleLeftToolbar);
       uploadImageBtn.addEventListener('click', () => imageFileInput.click());
       imageFileInput.addEventListener('change', () => {
@@ -6397,7 +6973,7 @@
         if (file) addImageFromFile(file);
         imageFileInput.value = '';
       });
-      sizeRange.addEventListener('input', () => { state.brushSize = Number(sizeRange.value); sizeValue.textContent = `${state.brushSize} px`; });
+      sizeRange.addEventListener('input', () => { state.brushSize = Number(sizeRange.value); sizeValue.textContent = `${state.brushSize} px`; updateBoardCursor(); });
       colorPicker.addEventListener('input', () => { state.color = colorPicker.value; updateSwatches(); schedulePersist(); });
       autoLabelVerticesCheckbox.addEventListener('change', () => {
         state.autoLabelVertices = autoLabelVerticesCheckbox.checked;
